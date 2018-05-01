@@ -25,7 +25,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
       t.boolean :is_admin
 
       ## Polymorphic Relationship for Student / Lecturer
-      t.references :role, polymorphic :true, index :true
+      t.references :role, polymorphic :true, index: true
 
       ## Confirmable
       # t.string   :confirmation_token
