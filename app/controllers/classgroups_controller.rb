@@ -1,0 +1,2 @@
+class ClassgroupsController < ApplicationController
+end
