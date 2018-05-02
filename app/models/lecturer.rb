@@ -1,4 +1,4 @@
 class Lecturer < ApplicationRecord
-  has_one :User
+  belongs_to :user
   has_many :class_groups
 end
