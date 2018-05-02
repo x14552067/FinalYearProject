@@ -4,15 +4,6 @@ class RegistrationsController < Devise::RegistrationsController
   def create
     build_resource(sign_up_params)
 
-    @student = Student.new
-
-    @student.first_name = ""
-    @student.last_name = ""
-
-    @student.save
-
-    resource.role = @student
-
     resource.save
     yield resource if block_given?
     if resource.persisted?

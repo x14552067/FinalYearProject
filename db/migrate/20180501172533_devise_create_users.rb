@@ -23,6 +23,8 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
 
       ## Admin Flag
       t.boolean :is_admin, :default => false
+      t.references :student
+      t.references :lecturer
 
       ## Confirmable
       # t.string   :confirmation_token

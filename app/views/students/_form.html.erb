@@ -1,0 +1,49 @@
+<div class="row">
+
+  <div class="col-md-6 col-md-offset-3 account-form">
+
+    <div class="classistant-form">
+
+      <h2>You're almost there..</h2>
+      <hr>
+
+
+      <%= bootstrap_form_with(model: student, local: true) do |form| %>
+      <% if student.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(student.errors.count, "error") %> prohibited this student from being saved:</h2>
+
+          <ul>
+            <% student.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="form-group">
+        <div class="field">
+          <%= form.text_field :first_name, label: "First Name"%>
+        </div>
+
+        <div class="field">
+          <%= form.text_field :last_name, label: "Last Name"%>
+        </div>
+
+      </div>
+
+      <div class="actions">
+        <%= form.submit "Complete Registration", class: "btn btn-primary" %>
+      </div>
+
+        <div class="progress registration-progress">
+          <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+
+    </div>
+  </div>
+</div>
+<% end %>
+
+
+

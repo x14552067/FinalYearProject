@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
   authenticate :user do
+    resources :students
   end
 
   get 'static_pages/index'
