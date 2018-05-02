@@ -7,3 +7,29 @@ classistant-form {
   border-radius: .5em;
   padding: 1em;
 }
+
+.login-heading {
+  margin-bottom: 0;
+}
+
+.account-form {
+  border: 1px solid;
+  border-color: #CCCCCC;
+  -webkit-border-radius: .3em;
+  -moz-border-radius: .3em;
+  border-radius: .3em;
+  padding-top: 3em;
+  padding-bottom: 3em;
+}
+
+.classistant-form > form > .field {
+  margin-bottom: 1.5em;
+}
+
+.classistant-form > form > .field > .form-check > .form-check-input {
+  margin-right: .5em;
+}
+
+.registration-progress {
+  margin-top: 2em;
+}

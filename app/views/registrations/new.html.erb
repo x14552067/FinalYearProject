@@ -1,16 +1,15 @@
 <div class="row">
 
-  <div class="col-md-6 col-md-offset-3">
+  <div class="col-md-6 col-md-offset-3 account-form">
 
     <div class="classistant-form">
 
       <h2>Sign up</h2>
 
-      <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+      <%= bootstrap_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
         <%= devise_error_messages! %>
 
         <div class="field">
-          <%= f.label :email %><br />
           <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
         </div>
 
@@ -19,18 +18,21 @@
           <% if @minimum_password_length %>
           <em>(<%= @minimum_password_length %> characters minimum)</em>
           <% end %><br />
-          <%= f.password_field :password, autocomplete: "off" %>
+          <%= f.password_field :password, autocomplete: "off", hide_label: true %>
         </div>
 
         <div class="field">
-          <%= f.label :password_confirmation %><br />
           <%= f.password_field :password_confirmation, autocomplete: "off" %>
         </div>
 
         <div class="actions">
-          <%= f.submit "Sign up" %>
+          <%= f.submit "Next Step", class: "btn btn-primary" %>
         </div>
       <% end %>
+
+      <div class="progress registration-progress">
+        <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
 
       <!-- <%= render "devise/shared/links" %> -->
     </div>
