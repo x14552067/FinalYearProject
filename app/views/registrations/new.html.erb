@@ -25,6 +25,11 @@
           <%= f.password_field :password_confirmation, autocomplete: "off" %>
         </div>
 
+        <div class="field">
+          <%= f.input :role, :as => :hidden, :input_html => { :value => Student.new} %>
+        </div>
+
+
         <div class="actions">
           <%= f.submit "Next Step", class: "btn btn-primary" %>
         </div>
