@@ -37,10 +37,10 @@ ActiveRecord::Schema.define(version: 20180501175105) do
     t.string "first_name"
     t.string "last_name"
     t.string "institute"
-    t.bigint "users_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["users_id"], name: "index_lecturers_on_users_id"
+    t.index ["user_id"], name: "index_lecturers_on_user_id"
   end
 
   create_table "student_classgroups", id: false, force: :cascade do |t|
@@ -60,10 +60,10 @@ ActiveRecord::Schema.define(version: 20180501175105) do
   create_table "students", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
-    t.bigint "users_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["users_id"], name: "index_students_on_users_id"
+    t.index ["user_id"], name: "index_students_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -77,7 +77,7 @@ ActiveRecord::Schema.define(version: 20180501175105) do
     t.datetime "last_sign_in_at"
     t.inet "current_sign_in_ip"
     t.inet "last_sign_in_ip"
-    t.boolean "is_admin"
+    t.boolean "is_admin", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
@@ -86,7 +86,7 @@ ActiveRecord::Schema.define(version: 20180501175105) do
 
   add_foreign_key "class_groups", "lecturers"
   add_foreign_key "class_sessions", "class_groups", column: "class_groups_id"
-  add_foreign_key "lecturers", "users", column: "users_id"
+  add_foreign_key "lecturers", "users"
   add_foreign_key "student_responses", "students", column: "students_id"
-  add_foreign_key "students", "users", column: "users_id"
+  add_foreign_key "students", "users"
 end

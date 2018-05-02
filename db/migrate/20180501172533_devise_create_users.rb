@@ -23,8 +23,6 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
 
       ## Admin Flag
       t.boolean :is_admin, :default => false
-      t.references :student
-      t.references :lecturer
 
       ## Confirmable
       # t.string   :confirmation_token
@@ -43,7 +41,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
 
     add_index :users, :email,                unique: true
     add_index :users, :reset_password_token, unique: true
-    add_index :users, [:role_id, :role_type]
+
     # add_index :users, :confirmation_token,   unique: true
     # add_index :users, :unlock_token,         unique: true
   end
