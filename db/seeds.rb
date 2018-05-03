@@ -6,12 +6,15 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+@paul = Lecturer.new(first_name: "Paul", last_name: "Reid", institute: "NCI", user_id: 1)
+
 @admin = User.new
-@admin.id = 1
+@admin.id = 0
 @admin.email = "paulreid@mail.com"
 @admin.password = "123456"
 @admin.is_admin = true
+@admin.lecturer = @paul
 @admin.save
 
-Lecturer.new(first_name: "Paul", last_name: "Reid", institute: "NCI", user_id: 1)
+
 

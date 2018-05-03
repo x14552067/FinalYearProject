@@ -1,3 +1,31 @@
 // Place all the styles related to the classgroups controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.class-heading {
+  padding: 1em;
+}
+
+.class-description {
+  margin-top: 1em;
+}
+
+.class-body {
+  background-color: #ECF0F1;
+}
+
+.class-image-container {
+  padding-top: 1em;
+}
+
+.class-image {
+  width: 10em;
+  height: 10em;
+  display: block;
+  margin: 0 auto;
+}
+
+.class-top-row {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}

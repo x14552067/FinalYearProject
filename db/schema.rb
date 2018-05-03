@@ -15,22 +15,23 @@ ActiveRecord::Schema.define(version: 20180501175105) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "class_groups", force: :cascade do |t|
+  create_table "class_sessions", force: :cascade do |t|
+    t.bigint "classgroups_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["classgroups_id"], name: "index_class_sessions_on_classgroups_id"
+  end
+
+  create_table "classgroups", force: :cascade do |t|
     t.string "class_name"
     t.string "course_name"
     t.string "class_description"
     t.integer "unique_id"
+    t.integer "image_id"
     t.bigint "lecturer_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["lecturer_id"], name: "index_class_groups_on_lecturer_id"
-  end
-
-  create_table "class_sessions", force: :cascade do |t|
-    t.bigint "class_groups_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["class_groups_id"], name: "index_class_sessions_on_class_groups_id"
+    t.index ["lecturer_id"], name: "index_classgroups_on_lecturer_id"
   end
 
   create_table "lecturers", force: :cascade do |t|
@@ -45,8 +46,8 @@ ActiveRecord::Schema.define(version: 20180501175105) do
 
   create_table "student_classgroups", id: false, force: :cascade do |t|
     t.bigint "student_id"
-    t.bigint "class_group_id"
-    t.index ["class_group_id"], name: "index_student_classgroups_on_class_group_id"
+    t.bigint "classgroup_id"
+    t.index ["classgroup_id"], name: "index_student_classgroups_on_classgroup_id"
     t.index ["student_id"], name: "index_student_classgroups_on_student_id"
   end
 
@@ -84,8 +85,8 @@ ActiveRecord::Schema.define(version: 20180501175105) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "class_groups", "lecturers"
-  add_foreign_key "class_sessions", "class_groups", column: "class_groups_id"
+  add_foreign_key "class_sessions", "classgroups", column: "classgroups_id"
+  add_foreign_key "classgroups", "lecturers"
   add_foreign_key "lecturers", "users"
   add_foreign_key "student_responses", "students", column: "students_id"
   add_foreign_key "students", "users"
