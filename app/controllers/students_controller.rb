@@ -10,7 +10,7 @@ class StudentsController < ApplicationController
 
     respond_to do |format|
       if @student.save
-        format.html {redirect_to profile_url }
+        format.html {redirect_to dashboard_index_url }
 
       else
         format.html { render :new }
