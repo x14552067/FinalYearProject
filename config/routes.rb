@@ -4,7 +4,7 @@ Rails.application.routes.draw do
     resources :students
     resources :dashboard
     resources :classgroups
-    resources :enrollment
+    resource :enrollment
 
   end
 

@@ -8,18 +8,23 @@
 <div class="row">
   <div class="col-md-3 dashboard-option">
     <%= image_tag("placeholder.jpg", :alt => "A Placeholder Image", class: "img-circle dashboard-image") %>
-    <p>Classes</p>
+    <br>
+    <%= link_to("Classes", classgroups_url, class: "btn btn-primary dashboard-btn") %>
+
   </div>
   <div class="col-md-3 dashboard-option">
     <%= image_tag("placeholder.jpg", :alt => "A Placeholder Image", class: "img-circle dashboard-image") %>
-    <p>Join Session</p>
+    <br>
+    <%= link_to("Join Session", classgroups_url, class: "btn btn-primary dashboard-btn") %>
   </div>
   <div class="col-md-3 dashboard-option">
     <%= image_tag("placeholder.jpg", :alt => "A Placeholder Image", class: "img-circle dashboard-image") %>
-    <p>Enroll</p>
+    <br>
+    <%= link_to("Enroll", enrollment_url, class: "btn btn-primary dashboard-btn") %>
   </div>
   <div class="col-md-3 dashboard-option">
     <%= image_tag("placeholder.jpg", :alt => "A Placeholder Image", class: "img-circle dashboard-image") %>
-    <p>Settings</p>
+    <br>
+    <%= link_to("Settings", classgroups_url, class: "btn btn-primary dashboard-btn") %>
   </div>
 </div>
