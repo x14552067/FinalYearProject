@@ -51,13 +51,6 @@ ActiveRecord::Schema.define(version: 20180504163632) do
     t.index ["user_id"], name: "index_lecturers_on_user_id"
   end
 
-  create_table "student_classgroups", id: false, force: :cascade do |t|
-    t.bigint "student_id"
-    t.bigint "classgroup_id"
-    t.index ["classgroup_id"], name: "index_student_classgroups_on_classgroup_id"
-    t.index ["student_id"], name: "index_student_classgroups_on_student_id"
-  end
-
   create_table "student_responses", force: :cascade do |t|
     t.bigint "students_id"
     t.datetime "created_at", null: false
