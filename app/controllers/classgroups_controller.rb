@@ -39,6 +39,12 @@ class ClassgroupsController < ApplicationController
 
   end
 
+  def enroll
+
+
+
+  end
+
   private
   def classgroup_params
     params.require(:classgroup).permit(:class_name, :course_name, :class_description, :classgroup)

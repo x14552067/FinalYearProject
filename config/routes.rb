@@ -3,7 +3,10 @@ Rails.application.routes.draw do
   authenticate :user do
     resources :students
     resources :dashboard
-    resources :classgroups
+    resources :classgroups do
+      get 'enroll', :to => 'classgroups#enroll'
+    end
+
   end
 
   get 'static_pages/index'
