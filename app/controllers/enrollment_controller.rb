@@ -1,27 +1,50 @@
 class EnrollmentController < ApplicationController
 
-  def index
-    render 'enroll'
+  def new
+    @enrollment = Enrollment.new
   end
 
   def create
 
+    #Get the enrollment key as a param from the form
     @enrollment_key = params["Enrollment Key"]
 
-    p "#####################"
-    p @enrollment_key
-    p "#####################"
+    #Create an enrollment which is only used to trigger errors on the form
+    @enrollment = Enrollment.new
+    @enrollment.enrollment_key = @enrollment_key
 
+    #Find the class with the enrollment key
     @class_to_join = Classgroup.where(unique_id: @enrollment_key)
+    @class_to_join = @class_to_join.to_ary.first
 
-    if @class_to_join.nil?
+    #Check if the class exists or we are a student
+    if !@class_to_join.nil? and current_user.student.present?
+
+      if(@class_to_join.students.where(:user_id => current_user.id).exists?)
+
+        p "###################"
+
+        p "###################"
+
+        @enrollment.errors[:enrollment_key] << ["You are already enrolled in that class"]
+        render 'new'
+      else
+
+        #Get the student logged in
+        @current_student = Student.find(current_user.student.id)
+
+        #Enroll him in the class and save it
+        @class_to_join.students << @current_student
+        @class_to_join.save
+
+        #Render the dashboard for now
+        redirect_to '/dashboard'
+
+      end
 
     else
-      if (current_user.student.present?)
-        @class_to_join.students << current_user.student
-        @class_to_join.save
-        redirect_to 'success'
-      end
+      @enrollment.errors[:enrollment_key] << ["Invalid Enrollment Key"]
+      render 'new'
     end
   end
 

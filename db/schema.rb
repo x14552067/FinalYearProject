@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180504163632) do
+ActiveRecord::Schema.define(version: 20180504181633) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,12 @@ ActiveRecord::Schema.define(version: 20180504163632) do
     t.bigint "classgroup_id", null: false
     t.index ["classgroup_id", "student_id"], name: "index_classgroups_students_on_classgroup_id_and_student_id"
     t.index ["student_id", "classgroup_id"], name: "index_classgroups_students_on_student_id_and_classgroup_id"
+  end
+
+  create_table "enrollments", force: :cascade do |t|
+    t.integer "enrollment_key"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "lecturers", force: :cascade do |t|
