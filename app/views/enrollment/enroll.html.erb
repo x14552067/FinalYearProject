@@ -1,0 +1,14 @@
+<div class="row">
+  <div class="col-md-12 classistant-body">
+    <div class="heading">
+      <h2>Enroll in a Class</h2>
+      <p>To enroll in a class simply enter the Enrollment key below and press submit</p>
+    </div>
+    <div class="classistant-form centered-form">
+      <%= bootstrap_form_tag({controller: "enrollment", action: "create"}) do %>
+        <%= number_field_tag 'Enrollment Key'%>
+        <%= submit_tag("Enroll!", class: "btn btn-primary" )%>
+    <% end %>
+    </div>
+  </div>
+</div>

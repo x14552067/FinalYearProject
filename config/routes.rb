@@ -3,9 +3,8 @@ Rails.application.routes.draw do
   authenticate :user do
     resources :students
     resources :dashboard
-    resources :classgroups do
-      get 'enroll', :to => 'classgroups#enroll'
-    end
+    resources :classgroups
+    resources :enrollment
 
   end
 
