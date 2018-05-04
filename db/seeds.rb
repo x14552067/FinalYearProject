@@ -8,13 +8,7 @@
 
 @paul = Lecturer.new(first_name: "Paul", last_name: "Reid", institute: "NCI", user_id: 1)
 
-@admin = User.new
-@admin.id = 0
-@admin.email = "paulreid@mail.com"
-@admin.password = "123456"
-@admin.is_admin = true
-@admin.lecturer = @paul
-@admin.save
+@admin = User.new(id: 0, email: "paulreid@mail.com", password: "123456", is_admin: true, lecturer: @paul)
 
-
-
+@itp = Classgroup.new(id: 0, class_name: "Intro to Programming", course_name: "BSHC",
+                      class_description: "Learn to Program using Java", unique_id: 9109, image_id: 1, lecturer_id: 1)
