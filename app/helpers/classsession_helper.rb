@@ -1,0 +1,2 @@
+module ClasssessionHelper
+end
