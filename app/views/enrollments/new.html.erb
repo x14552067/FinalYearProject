@@ -22,8 +22,8 @@
       </div>
     <% end %>
     <div class="classistant-form centered-form">
-      <%= bootstrap_form_for @enrollment, :url => enrollment_path do |f| %>
-        <%= f.number_field :enrollment_key, label: 'Enroll' %>
+      <%= bootstrap_form_for @enrollment, :url => enrollment_path,  inline_errors: false do |f| %>
+        <%= f.number_field :enrollment_key, label: 'Enrollment Key', class: 'enroll-input' %>
         <%= f.submit "Enroll", class: "btn btn-primary"%>
       <% end %>
     </div>
