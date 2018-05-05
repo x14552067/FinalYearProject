@@ -10,16 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180504181633) do
+ActiveRecord::Schema.define(version: 20180505164750) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "class_sessions", force: :cascade do |t|
-    t.bigint "classgroups_id"
+  create_table "chat_messages", force: :cascade do |t|
+    t.bigint "classsession_id"
+    t.bigint "student_id"
+    t.bigint "lecturer_id"
+    t.string "content"
+    t.string "session_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["classgroups_id"], name: "index_class_sessions_on_classgroups_id"
+    t.index ["classsession_id"], name: "index_chat_messages_on_classsession_id"
+    t.index ["lecturer_id"], name: "index_chat_messages_on_lecturer_id"
+    t.index ["student_id"], name: "index_chat_messages_on_student_id"
   end
 
   create_table "classgroups", force: :cascade do |t|
@@ -39,6 +45,16 @@ ActiveRecord::Schema.define(version: 20180504181633) do
     t.bigint "classgroup_id", null: false
     t.index ["classgroup_id", "student_id"], name: "index_classgroups_students_on_classgroup_id_and_student_id"
     t.index ["student_id", "classgroup_id"], name: "index_classgroups_students_on_student_id_and_classgroup_id"
+  end
+
+  create_table "classsessions", force: :cascade do |t|
+    t.bigint "classgroups_id"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["classgroups_id"], name: "index_classsessions_on_classgroups_id"
   end
 
   create_table "enrollments", force: :cascade do |t|
@@ -91,8 +107,11 @@ ActiveRecord::Schema.define(version: 20180504181633) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "class_sessions", "classgroups", column: "classgroups_id"
+  add_foreign_key "chat_messages", "classsessions"
+  add_foreign_key "chat_messages", "lecturers"
+  add_foreign_key "chat_messages", "students"
   add_foreign_key "classgroups", "lecturers"
+  add_foreign_key "classsessions", "classgroups", column: "classgroups_id"
   add_foreign_key "lecturers", "users"
   add_foreign_key "student_responses", "students", column: "students_id"
   add_foreign_key "students", "users"
