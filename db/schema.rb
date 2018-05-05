@@ -15,7 +15,7 @@ ActiveRecord::Schema.define(version: 20180505164750) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "chat_messages", force: :cascade do |t|
+  create_table "chatmessages", force: :cascade do |t|
     t.bigint "classsession_id"
     t.bigint "student_id"
     t.bigint "lecturer_id"
@@ -23,9 +23,9 @@ ActiveRecord::Schema.define(version: 20180505164750) do
     t.string "session_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["classsession_id"], name: "index_chat_messages_on_classsession_id"
-    t.index ["lecturer_id"], name: "index_chat_messages_on_lecturer_id"
-    t.index ["student_id"], name: "index_chat_messages_on_student_id"
+    t.index ["classsession_id"], name: "index_chatmessages_on_classsession_id"
+    t.index ["lecturer_id"], name: "index_chatmessages_on_lecturer_id"
+    t.index ["student_id"], name: "index_chatmessages_on_student_id"
   end
 
   create_table "classgroups", force: :cascade do |t|
@@ -107,9 +107,9 @@ ActiveRecord::Schema.define(version: 20180505164750) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "chat_messages", "classsessions"
-  add_foreign_key "chat_messages", "lecturers"
-  add_foreign_key "chat_messages", "students"
+  add_foreign_key "chatmessages", "classsessions"
+  add_foreign_key "chatmessages", "lecturers"
+  add_foreign_key "chatmessages", "students"
   add_foreign_key "classgroups", "lecturers"
   add_foreign_key "classsessions", "classgroups", column: "classgroups_id"
   add_foreign_key "lecturers", "users"
