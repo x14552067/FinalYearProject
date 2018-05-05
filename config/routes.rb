@@ -1,10 +1,14 @@
 Rails.application.routes.draw do
 
+  mount ActionCable.server => '/cable'
+
+
   authenticate :user do
     resources :students
     resources :dashboard
     resources :classgroups
     resource :enrollment
+    resource :classsessions
 
   end
 

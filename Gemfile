@@ -21,6 +21,9 @@ gem 'devise'
 # Use Bootstrap for Styling
 gem 'bootstrap-sass'
 
+#JQuery
+gem 'jquery-rails'
+
 # Use Bootstrap Form for Forms
 gem "bootstrap_form",
     git: "https://github.com/bootstrap-ruby/bootstrap_form.git",

@@ -1,4 +1,4 @@
-class ClasssessionController < ApplicationController
+class ClasssessionsController < ApplicationController
 
   def show
     @messages = Chatmessage.all
