@@ -1,5 +1,17 @@
 class ClassgroupsController < ApplicationController
 
+  def index
+
+    if current_user.lecturer.nil?
+      @classes = current_user.student.classgroups
+      render 'student_view'
+    else
+      @classes = current_user.lecturer.classgroups
+      render 'lecturer_view'
+    end
+
+  end
+
   def show
     @classgroup = Classgroup.find(params[:id])
     p @classgroup
