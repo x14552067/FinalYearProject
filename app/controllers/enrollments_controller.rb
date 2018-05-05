@@ -1,4 +1,8 @@
-class EnrollmentController < ApplicationController
+class EnrollmentsController < ApplicationController
+
+  def show
+    redirect_to action: 'new'
+  end
 
   def new
     @enrollment = Enrollment.new
@@ -6,14 +10,14 @@ class EnrollmentController < ApplicationController
 
   def create
 
-    #Get the enrollment key as a param from the form
-    @enrollment_key = params["Enrollment Key"]
+    #Get the enrollments key as a param from the form
+    @enrollment_key = params[:enrollment][:enrollment_key]
 
-    #Create an enrollment which is only used to trigger errors on the form
+    #Create an enrollments which is only used to trigger errors on the form
     @enrollment = Enrollment.new
     @enrollment.enrollment_key = @enrollment_key
 
-    #Find the class with the enrollment key
+    #Find the class with the enrollments key
     @class_to_join = Classgroup.where(unique_id: @enrollment_key)
     @class_to_join = @class_to_join.to_ary.first
 

@@ -250,7 +250,7 @@ Devise.setup do |config|
   # The "*/*" below is required to match Internet Explorer requests.
   # config.navigational_formats = ['*/*', :html]
 
-  # The default HTTP method used to sign out a resource. Default is :delete.
+  # The default HTTP method used to sign out a enrollments. Default is :delete.
   config.sign_out_via = :delete
 
   # ==> OmniAuth
