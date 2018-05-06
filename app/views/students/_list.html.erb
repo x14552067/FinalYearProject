@@ -1,0 +1,18 @@
+<table class="table student-list-table">
+  <thead>
+  <tr>
+    <th scope="col">Student ID</th>
+    <th scope="col">First Name</th>
+    <th scope="col">Last Name</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @students.each do |stud| %>
+    <tr>
+      <td><%= stud.id %></td>
+      <td><%= stud.first_name %></td>
+      <td><%= stud.last_name %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

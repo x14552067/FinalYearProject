@@ -14,8 +14,17 @@ class ClassgroupsController < ApplicationController
 
   def show
     @classgroup = Classgroup.find(params[:id])
-    p @classgroup
-    p params[:id]
+    @students = @classgroup.students
+
+    if current_user.lecturer.nil?
+      render 'student_show'
+    else
+      @students = @classgroup.students
+      render 'lecturer_show'
+    end
+
+
+
   end
 
   def new

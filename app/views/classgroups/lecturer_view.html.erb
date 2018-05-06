@@ -1,0 +1,32 @@
+<div class="row class-body class-list-row">
+  <div class="col-md-12 class-list-view">
+    <h2 class="heading">Class List</h2>
+    <button class="btn btn-primary new-class-btn">Create a New Class</button>
+  </div>
+</div>
+
+<% @classes.each do |classgroup| %>
+  <div class="row class-body class-list-row">
+    <div class="col-md-6 class-list-view">
+      <a href="/classgroups/<%=classgroup.id%>"><h4><%= classgroup.class_name %></h4></a>
+      <p><%= classgroup.class_description %></p>
+    </div>
+    <div class="col-md-6 class-list-view">
+      <% if classgroup.image_id == 1 %>
+        <%= image_tag("computer-class-icon.svg", :alt => "A Picture of a Computer", class: "img-rounded class-list-image") %>
+
+
+      <% elsif classgroup.image_id == 2 %>
+        <%= image_tag("computer-class-icon.svg", :alt => "A Picture of a Computer", class: "img-rounded class-list-image") %>
+
+      <% elsif classgroup.image_id == 3 %>
+        <%= image_tag("computer-class-icon.svg", :alt => "A Picture of a Computer", class: "img-rounded class-list-image") %>
+
+      <% elsif classgroup.image_id == 4 %>
+        <%= image_tag("computer-class-icon.svg", :alt => "A Picture of a Computer", class: "img-rounded class-list-image") %>
+
+      <% end %>
+    </div>
+  </div>
+<% end %>
+

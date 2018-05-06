@@ -1,15 +1,30 @@
 <div class="row">
   <div class="col-md-12">
-      <h2 class="heading">Lecturer Dashboard</h2>
+    <div class="jumbotron">
+      <h2 class="heading">Dashboard</h2>
+    </div>
   </div>
 </div>
-<hr>
 <div class="row">
-  <div class="col-md-12">
-    <div class="tile">
-      <h3>Create a new Class</h3>
-      <hr>
-      <%= link_to("Create a Class", new_classgroup_url, class: "btn btn-primary") %>
-    </div>
+  <div class="col-md-3 dashboard-option">
+    <%= image_tag("placeholder.jpg", :alt => "A Placeholder Image", class: "img-circle dashboard-image") %>
+    <br>
+    <%= link_to("Classes", classgroups_url, class: "btn btn-primary dashboard-btn") %>
+
+  </div>
+  <div class="col-md-3 dashboard-option">
+    <%= image_tag("placeholder.jpg", :alt => "A Placeholder Image", class: "img-circle dashboard-image") %>
+    <br>
+    <%= link_to("Join Session", classsessions_url, class: "btn btn-primary dashboard-btn") %>
+  </div>
+  <div class="col-md-3 dashboard-option">
+    <%= image_tag("placeholder.jpg", :alt => "A Placeholder Image", class: "img-circle dashboard-image") %>
+    <br>
+    <%= link_to("Enroll", enrollment_url, class: "btn btn-primary dashboard-btn") %>
+  </div>
+  <div class="col-md-3 dashboard-option">
+    <%= image_tag("placeholder.jpg", :alt => "A Placeholder Image", class: "img-circle dashboard-image") %>
+    <br>
+    <%= link_to("Settings", classgroups_url, class: "btn btn-primary dashboard-btn") %>
   </div>
 </div>

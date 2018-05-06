@@ -8,6 +8,11 @@ class SessionChannel < ApplicationCable::Channel
   end
 
   def speak(data)
+
+    @sent_message = Chatmessage.new
+    @sent_message.content = data['message']
+
     ActionCable.server.broadcast "room_channel", message: data['message']
+
   end
 end

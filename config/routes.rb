@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     resources :dashboard
     resources :classgroups
     resource :enrollment
-    resource :classsessions
+    resources :classsessions
 
   end
 

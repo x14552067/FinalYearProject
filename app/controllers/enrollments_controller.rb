@@ -26,10 +26,6 @@ class EnrollmentsController < ApplicationController
 
       if(@class_to_join.students.where(:user_id => current_user.id).exists?)
 
-        p "###################"
-
-        p "###################"
-
         @enrollment.errors[:enrollment_key] << ["You are already enrolled in that class"]
         render 'new'
       else
