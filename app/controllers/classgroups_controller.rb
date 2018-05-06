@@ -15,6 +15,8 @@ class ClassgroupsController < ApplicationController
   def show
     @classgroup = Classgroup.find(params[:id])
     @students = @classgroup.students
+    p "####"
+    p @classgroup
 
     if current_user.lecturer.nil?
       render 'student_show'
@@ -24,17 +26,22 @@ class ClassgroupsController < ApplicationController
     end
 
 
-
   end
 
   def new
     @classgroup = Classgroup.new
+    @button_text = "Create Class"
+  end
+
+  def edit
+    @classgroup = Classgroup.find(params[:id])
+    @button_text = "Save Changes"
 
   end
 
   def create
 
-    if(Classgroup.any?)
+    if (Classgroup.any?)
       @id = Classgroup.maximum(:id).next
     else
       @id = 1
@@ -51,17 +58,23 @@ class ClassgroupsController < ApplicationController
 
     if @classgroup.save
       redirect_to @classgroup
-
     else
       render 'new'
     end
+  end
 
+  def update
 
+    @classgroup = Classgroup.find(params[:id])
 
+    if @classgroup.update_attributes(classgroup_params)
+      redirect_to @classgroup
+    else
+      format.html {render :edit}
+    end
   end
 
   def enroll
-
 
 
   end

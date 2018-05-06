@@ -1,6 +1,7 @@
 <div class="row class-body class-list-row">
   <div class="col-md-12 class-list-view">
     <h2 class="heading">Class List</h2>
+    <hr class="hr-dark">
     <button class="btn btn-primary new-class-btn">Create a New Class</button>
   </div>
 </div>
@@ -12,6 +13,9 @@
       <p><%= classgroup.class_description %></p>
     </div>
     <div class="col-md-6 class-list-view">
+      <%= link_to 'Edit', edit_classgroup_path(classgroup), class: "btn btn-primary"%>
+      <%= link_to 'Destroy', classgroup, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary"%>
+
       <% if classgroup.image_id == 1 %>
         <%= image_tag("computer-class-icon.svg", :alt => "A Picture of a Computer", class: "img-rounded class-list-image") %>
 
