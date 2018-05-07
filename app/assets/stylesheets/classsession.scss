@@ -1,3 +1,44 @@
 // Place all the styles related to the class_session controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#chat-messages { }
+
+.message-box {
+  width: 80%;
+  height: 20em;
+  overflow-y: scroll;
+  border: 1px #bfbfbf solid;
+  background-color: #ffffff;
+  -webkit-border-radius: .2em;
+  -moz-border-radius: .2em;
+  border-radius: .2em;
+}
+
+.chat-data {
+  display: none;
+}
+
+.chat-field {
+  width: 65%;
+  margin-top: 1em;
+  padding: .5em;
+}
+
+.chat-btn {
+  width: 15%;
+}
+
+.anon-label {
+  margin-top: .5em;
+}
+
+.message-box > p {
+  padding: .2em;
+
+}
+
+.chat-timestamp {
+  font-size: .8em;
+  font-style: italic;
+}

@@ -1,0 +1,12 @@
+<% @messages.each do |msg| %>
+  <% if msg.lecturer.nil? %>
+
+    <p><span class="chat-timestamp"><%= msg.created_at.strftime('%H:%M') %></span> <%= msg.student.full_name %>: <%= msg.content %></p>
+
+  <% else %>
+
+    <p><span class="chat-timestamp"><%= msg.created_at.strftime('%H:%M') %></span> <%= msg.lecturer.full_name %>: <%= msg.content %></p>
+
+  <%end %>
+
+<% end %>

@@ -6,7 +6,17 @@ class ClasssessionsController < ApplicationController
   end
 
   def show
-    @messages = Chatmessage.all
+
+    @session = Classsession.find(params[:id])
+    @messages = @session.chatmessages
+    @user = current_user
+
+    if current_user.lecturer.nil?
+      @user_type = get_student_code
+    else
+      @user_type = get_lecturer_code
+    end
+
   end
 
   def new

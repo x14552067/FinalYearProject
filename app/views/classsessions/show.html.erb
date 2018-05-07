@@ -1,10 +1,55 @@
-<h1>Chat room</h1>
+<div class="row classistant-body">
+  <div class="col-md-12">
 
-<div id="messages">
-  <%= render @messages %>
+    <h1>Classistant Session</h1>
+    <h3><%= @session.topic %></h3>
+    <p>Details might go here, shall see</p>
+
+  </div>
+</div>
+<div class="row classistant-body">
+  <div class="col-md-12">
+
+    <h1>Interaction Box</h1>
+    <p>Quizzes, Polls etc</p>
+
+  </div>
 </div>
 
-<form>
-  <label>Say something:</label><br>
-  <input type="text" data-behavior="room_speaker">
-</form>
+<div class="row classistant-body">
+  <div class="col-md-6">
+    <p class="chat-data" id="uid"><%= @user.id %></p>
+    <p class="chat-data" id="utp"><%= @user_type %></p>
+    <p class="chat-data" id="sid"><%= @session.id %></p>
+
+    <h1>Chat</h1>
+    <div id="chat-messages" class="message-box">
+      <%= render 'chatmessage/list'%>
+    </div>
+
+    <form>
+      <input type="text" data-behavior="room_speaker" class="chat-field">
+      <button class="btn btn-primary chat-btn">Send</button>
+      <br>
+      <label class="anon-label"><input type="checkbox" name="checkbox" value="value">Send Message Anonymously</label>
+    </form>
+
+    <p>Checkbox to send message anonly</p>
+
+  </div>
+  <div class="col-md-6">
+
+    <h1>Ask a Question</h1>
+    <div id="question-messages"  class="message-box">
+      <%= render 'chatmessage/list'%>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+

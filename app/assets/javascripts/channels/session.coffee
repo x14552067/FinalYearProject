@@ -10,8 +10,13 @@ App.session = App.cable.subscriptions.create "SessionChannel",
 # Called when the subscription has been terminated by the server
 
   received: (data) ->
-# Called when there's incoming data on the websocket for this channel
-    alert(data['message'])
+    # Called when there's incoming data on the websocket for this channel
+    payload = data['message']
+    message_content = payload['content']
+
+    $('#chat-messages').append("<p>" + message_content + "</p>")
+
+
 
   speak: (message) ->
     @perform 'speak', message: message
@@ -19,6 +24,12 @@ App.session = App.cable.subscriptions.create "SessionChannel",
 
   $(document).on 'keypress', '[data-behavior~=room_speaker]', (event) ->
     if event.keyCode is 13 # return/enter = send
-      App.session.speak event.target.value
+      payload =
+        content: event.target.value
+        uid: $('#uid').text()
+        utp: $('#utp').text()
+        sid: $('#sid').text()
+
+      App.session.speak payload
       event.target.value = ''
       event.preventDefault()
