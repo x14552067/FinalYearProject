@@ -48,13 +48,16 @@ ActiveRecord::Schema.define(version: 20180505164750) do
   end
 
   create_table "classsessions", force: :cascade do |t|
-    t.bigint "classgroups_id"
+    t.bigint "classgroup_id"
+    t.bigint "students_id"
     t.datetime "start_time"
     t.datetime "end_time"
-    t.string "description"
+    t.string "topic"
+    t.boolean "is_active"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["classgroups_id"], name: "index_classsessions_on_classgroups_id"
+    t.index ["classgroup_id"], name: "index_classsessions_on_classgroup_id"
+    t.index ["students_id"], name: "index_classsessions_on_students_id"
   end
 
   create_table "enrollments", force: :cascade do |t|
@@ -111,7 +114,8 @@ ActiveRecord::Schema.define(version: 20180505164750) do
   add_foreign_key "chatmessages", "lecturers"
   add_foreign_key "chatmessages", "students"
   add_foreign_key "classgroups", "lecturers"
-  add_foreign_key "classsessions", "classgroups", column: "classgroups_id"
+  add_foreign_key "classsessions", "classgroups"
+  add_foreign_key "classsessions", "students", column: "students_id"
   add_foreign_key "lecturers", "users"
   add_foreign_key "student_responses", "students", column: "students_id"
   add_foreign_key "students", "users"

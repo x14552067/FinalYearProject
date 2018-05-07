@@ -14,14 +14,13 @@ class ClassgroupsController < ApplicationController
 
   def show
     @classgroup = Classgroup.find(params[:id])
-    @students = @classgroup.students
-    p "####"
-    p @classgroup
+    @student_count = @classgroup.students.to_ary.count
 
     if current_user.lecturer.nil?
       render 'student_show'
     else
       @students = @classgroup.students
+      @sessions = @classgroup.classsessions
       render 'lecturer_show'
     end
 
@@ -40,7 +39,6 @@ class ClassgroupsController < ApplicationController
   end
 
   def create
-
     if (Classgroup.any?)
       @id = Classgroup.maximum(:id).next
     else
@@ -72,11 +70,6 @@ class ClassgroupsController < ApplicationController
     else
       format.html {render :edit}
     end
-  end
-
-  def enroll
-
-
   end
 
   private

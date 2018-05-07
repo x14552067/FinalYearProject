@@ -26,6 +26,7 @@
 
 @itp = Classgroup.new(id: 0, class_name: "Intro to Programming", course_name: "BSHC",
                       class_description: "Learn to Program using Java", unique_id: 9109, image_id: 1, lecturer_id: 1)
+@itp.students << @aaron
 @itp.save
 
 @iwd = Classgroup.new(id: 1, class_name: "Intro to Web Design", course_name: "BSHC",
@@ -43,3 +44,10 @@
 @cad = Classgroup.new(id: 4, class_name: "Cloud Application Development", course_name: "BSHC",
                       class_description: "Just know that Rails is never sorry", unique_id: 9104, image_id: 1, lecturer_id: 1)
 @cad.save
+
+# Creating a Test Session for the System
+
+@ses = Classsession.new(id: 0, topic: "Test Session", classgroup_id: 0)
+@ses.save
+
+
