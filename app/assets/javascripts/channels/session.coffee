@@ -2,6 +2,10 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
+###########################################################################################
+#                       Code for Adding Messages Dynamically to pages                     #
+###########################################################################################
+
 addLecturerMessage = (payload) ->
   message_content = payload['content']
   timestamp = payload['timestamp']
@@ -26,29 +30,53 @@ addStudentMessage = (payload) ->
   messages = document.getElementById('chat-messages');
   messages.scrollTop = messages.scrollHeight;
 
+addQuestionMessage = (payload) ->
+  message_content = payload['content']
+  timestamp = payload['timestamp']
+  name = payload['name']
+
+  if(payload['anon'] == "t")
+    $('#question-messages').append("<p><span class='chat-timestamp'>" + timestamp + " </span> Anonymous: " + message_content + "</p>")
+  else
+    $('#question-messages').append("<p><span class='chat-timestamp'>" + timestamp + " </span> " + name + ": " + message_content + "</p>")
+
+  messages = document.getElementById('chat-messages');
+  messages.scrollTop = messages.scrollHeight;
+
+###########################################################################################
+#                   Code for Handling Websockets for a realtime session                   #
+###########################################################################################
+
 #Subscribe to the Session
 App.session = App.cable.subscriptions.create "SessionChannel",
+
   connected: ->
-# Called when the subscription is ready for use on the server
+  # Called when the subscription is ready for use on the server
 
 
   disconnected: ->
-# Called when the subscription has been terminated by the server
+  # Called when the subscription has been terminated by the server
 
   received: (data) ->
     # Called when there's incoming data on the websocket for this channel
     payload = data['message']
 
-    if(payload['utp'] == "191")
-      addLecturerMessage(payload)
-    else
-      addStudentMessage(payload)
+    if payload['type'] == 'chat'
+
+      if(payload['utp'] == "191")
+        addLecturerMessage(payload)
+      else
+        addStudentMessage(payload)
+
+    else if payload['type'] == 'question'
+      addQuestionMessage(payload)
 
 
 
+  #Method for handling sending messages
+  #This method is unfortunately cumbersome due to the differences in messages
+  #Perhaps a refactor into methods for each type of message but it will basically be the same without the ifs
   send_message: (type) ->
-
-    #build the Payload to be sent to session_channel.rb
 
     #Check if they are sending the message anonymously
     #This check figures out the type of message (Q - Question C - Chat)
@@ -112,13 +140,22 @@ App.session = App.cable.subscriptions.create "SessionChannel",
       App.session.send_message("c")
       event.preventDefault()
 
+  $(document).on 'keypress', '[data-behavior~=question_send]', (event) ->
+    if event.keyCode is 13 # return/enter = send
+      App.session.send_message("q")
+      event.preventDefault()
+
   activate_interactions = ->
 
     messages = document.getElementById('chat-messages');
     messages.scrollTop = messages.scrollHeight;
 
-    $(".chat-btn").on 'click', (event) ->
+    $("#send-chat").on 'click', (event) ->
       App.session.send_message("c")
+      event.preventDefault()
+
+    $("#send-question").on 'click', (event) ->
+      App.session.send_message("q")
       event.preventDefault()
 
   $(document).ready(activate_interactions)
