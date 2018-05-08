@@ -10,6 +10,8 @@
 
     <p>Below you will find a list of interactions you have set up for the class</p>
 
+    <%= line_chart @messages.group(:created_at).count %>
+
   </div>
 </div>
 <div class="row classistant-body session-body">
@@ -32,7 +34,7 @@
       <%= render 'question_box' %>
     </div>
     <form class="question-form">
-      <input type="text" data-behavior="question_send" class="message-field" id="question-input" autocomplete="off" placeholder="Answer a Question..">
+      <input type="text" data-behavior="question_send" class="message-field" id="question-input" autocomplete="off" placeholder="Answer a Question..">v
       <button class="btn btn-primary chat-btn" data-behavior="question_send" id="send-question">Send</button>
     </form>
   </div>

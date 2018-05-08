@@ -6,5 +6,5 @@ test:
 
 production:
   adapter: redis
-  url: redis://localhost:6379/1
+  url: redis://redistogo:72be5b88d09560bd0f8231308bdbe7b9@porgy.redistogo.com:10939/
   channel_prefix: classistant_production
