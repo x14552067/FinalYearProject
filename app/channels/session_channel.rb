@@ -7,7 +7,7 @@ class SessionChannel < ApplicationCable::Channel
     # Any cleanup needed when channel is unsubscribed
   end
 
-  def speak(data)
+  def send_chat_message(data)
 
     #Take in the Payload from the sent Message
     @payload = data['message']
@@ -17,6 +17,8 @@ class SessionChannel < ApplicationCable::Channel
     @uid = @payload['uid']
     @utp = @payload['utp']
     @sid = @payload['sid']
+    @anon = @payload['anon']
+
 
     #Parse the User ID and User Type (Checks if they are somehow Strings, if so, cancel the rest of the action)
     @uid = Integer(@uid) rescue -100
@@ -51,7 +53,23 @@ class SessionChannel < ApplicationCable::Channel
         @save_message.student= @user
       end
 
+      if @anon == "t"
+        @save_message.is_anon = true
+      else
+        @save_message.is_anon = false
+      end
+
+      p "###################"
+
+      p @payload
+      p @anon
+      p @save_message
+
+      p "###################"
+
       if @save_message.save
+        @payload['timestamp'] = @save_message.created_at.strftime('%H:%M')
+        @payload['name'] = @user.full_name
         ActionCable.server.broadcast "session_channel", message: @payload
       end
 

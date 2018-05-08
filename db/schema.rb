@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20180505164750) do
     t.bigint "student_id"
     t.bigint "lecturer_id"
     t.string "content"
+    t.boolean "is_anon"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["classsession_id"], name: "index_chatmessages_on_classsession_id"

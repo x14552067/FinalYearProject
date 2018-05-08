@@ -9,10 +9,8 @@
 </div>
 <div class="row classistant-body">
   <div class="col-md-12">
-
     <h1>Interaction Box</h1>
     <p>Quizzes, Polls etc</p>
-
   </div>
 </div>
 
@@ -28,10 +26,10 @@
     </div>
 
     <form>
-      <input type="text" data-behavior="room_speaker" class="chat-field">
-      <button class="btn btn-primary chat-btn">Send</button>
+      <input type="text" data-behavior="chat_send" class="chat-field" id="chat-input" autocomplete="off">
+      <button class="btn btn-primary chat-btn" data-behavior="chat_send" id="send-chat">Send</button>
       <br>
-      <label class="anon-label"><input type="checkbox" name="checkbox" value="value">Send Message Anonymously</label>
+      <label class="anon-label"><input type="checkbox" name="checkbox" value="value" id="anon-box">Send Message Anonymously</label>
     </form>
 
     <p>Checkbox to send message anonly</p>
@@ -41,7 +39,7 @@
 
     <h1>Ask a Question</h1>
     <div id="question-messages"  class="message-box">
-      <%= render 'chatmessage/list'%>
+
     </div>
   </div>
 </div>

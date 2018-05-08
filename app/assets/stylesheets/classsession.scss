@@ -15,6 +15,10 @@
   border-radius: .2em;
 }
 
+.message-box > p {
+  margin-bottom: 5px;
+}
+
 .chat-data {
   display: none;
 }
@@ -41,4 +45,13 @@
 .chat-timestamp {
   font-size: .8em;
   font-style: italic;
+}
+
+.lecturer-name {
+  font-weight: bold;
+}
+
+.lecturer-message {
+  background-color: #e6e6e6;
+  
 }
