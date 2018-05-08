@@ -158,4 +158,8 @@ App.session = App.cable.subscriptions.create "SessionChannel",
       App.session.send_message("q")
       event.preventDefault()
 
+
+
+
+
   $(document).ready(activate_interactions)
