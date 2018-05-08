@@ -10,10 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180505164750) do
+ActiveRecord::Schema.define(version: 20180508153558) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "answermessages", force: :cascade do |t|
+    t.bigint "classsession_id"
+    t.bigint "lecturer_id"
+    t.bigint "questionmessage_id"
+    t.string "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["classsession_id"], name: "index_answermessages_on_classsession_id"
+    t.index ["lecturer_id"], name: "index_answermessages_on_lecturer_id"
+    t.index ["questionmessage_id"], name: "index_answermessages_on_questionmessage_id"
+  end
 
   create_table "chatmessages", force: :cascade do |t|
     t.bigint "classsession_id"
@@ -76,6 +88,17 @@ ActiveRecord::Schema.define(version: 20180505164750) do
     t.index ["user_id"], name: "index_lecturers_on_user_id"
   end
 
+  create_table "questionmessages", force: :cascade do |t|
+    t.bigint "classsession_id"
+    t.bigint "student_id"
+    t.string "content"
+    t.boolean "is_anon"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["classsession_id"], name: "index_questionmessages_on_classsession_id"
+    t.index ["student_id"], name: "index_questionmessages_on_student_id"
+  end
+
   create_table "student_responses", force: :cascade do |t|
     t.bigint "students_id"
     t.datetime "created_at", null: false
@@ -110,6 +133,9 @@ ActiveRecord::Schema.define(version: 20180505164750) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "answermessages", "classsessions"
+  add_foreign_key "answermessages", "lecturers"
+  add_foreign_key "answermessages", "questionmessages"
   add_foreign_key "chatmessages", "classsessions"
   add_foreign_key "chatmessages", "lecturers"
   add_foreign_key "chatmessages", "students"
@@ -117,6 +143,8 @@ ActiveRecord::Schema.define(version: 20180505164750) do
   add_foreign_key "classsessions", "classgroups"
   add_foreign_key "classsessions", "students", column: "students_id"
   add_foreign_key "lecturers", "users"
+  add_foreign_key "questionmessages", "classsessions"
+  add_foreign_key "questionmessages", "students"
   add_foreign_key "student_responses", "students", column: "students_id"
   add_foreign_key "students", "users"
 end

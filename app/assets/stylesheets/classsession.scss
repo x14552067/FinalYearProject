@@ -23,7 +23,7 @@
   display: none;
 }
 
-.chat-field {
+.message-field {
   width: 65%;
   margin-top: 1em;
   padding: .5em;
@@ -54,4 +54,8 @@
 .lecturer-message {
   background-color: #e6e6e6;
   
+}
+
+.session-body {
+  margin-bottom: 3em;
 }

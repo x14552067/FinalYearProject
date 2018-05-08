@@ -59,14 +59,6 @@ class SessionChannel < ApplicationCable::Channel
         @save_message.is_anon = false
       end
 
-      p "###################"
-
-      p @payload
-      p @anon
-      p @save_message
-
-      p "###################"
-
       if @save_message.save
         @payload['timestamp'] = @save_message.created_at.strftime('%H:%M')
         @payload['name'] = @user.full_name
