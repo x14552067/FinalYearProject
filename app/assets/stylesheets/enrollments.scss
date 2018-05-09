@@ -1,31 +1,6 @@
 // Place all the styles related to the enrollment controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-
-.enroll-error-explanation {
-  display: block;
-  width: 50%;
-  margin: 0 auto;
-  padding: 1em;
-  background-color: #EC644B !important;
-  border: 1px #EF4836 solid;
-  border-radius: .3em;
-  text-align: center;
-}
-
-.enroll-error-explanation > ul {
-  list-style-type: none;
-}
-
-.enroll-error-explanation > ul > li {
-  font-weight:bold;
-  font-style: italic;
-}
-
-.enroll-error-explanation > h2 {
-  text-decoration: underline;
-}
-
 .enroll-input {
   width: 8em;
   display: block;

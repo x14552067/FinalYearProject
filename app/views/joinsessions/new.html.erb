@@ -5,11 +5,11 @@
       <p>To join a Session simply enter the Session Code</p>
     </div>
 
-    <% if @enrollment.errors.any? %>
+    <% if @join_session.errors.any? %>
       <div class="error-explanation">
-        <h2>Error Prevented you from Enrolling</h2>
+        <h2>Error Prevented you from Joining</h2>
         <ul>
-          <% @enrollment.errors.full_messages.each do |msg| %>
+          <% @join_session.errors.full_messages.each do |msg| %>
             <li>
               <%= if (msg.include? "Key")
                     "Invalid Enrollment Key"
@@ -24,8 +24,8 @@
 
 
     <div class="classistant-form centered-form">
-      <%= bootstrap_form_for @join_request, :url => enrollment_path,  inline_errors: false do |f| %>
-        <%= f.number_field :enrollment_key, label: 'Enrollment Key', class: 'enroll-input' %>
+      <%= bootstrap_form_for @join_session, :url => joinsession_path,  inline_errors: false do |f| %>
+        <%= f.number_field :session_key, label: 'Session Key', class: 'enroll-input' %>
         <%= f.submit "Enroll", class: "btn btn-primary"%>
       <% end %>
     </div>

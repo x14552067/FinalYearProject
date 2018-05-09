@@ -19,7 +19,7 @@
   margin-bottom: 5px;
 }
 
-.chat-data {
+.chat-data, .poll-data {
   display: none;
 }
 
@@ -59,4 +59,25 @@
 .session-body {
   margin-bottom: 3em;
   padding-bottom: 3em;
+}
+
+.student-interaction {
+
+}
+
+#text-poll-div {
+  display: none;
+}
+
+.poll-buttons {
+  text-align: center;
+  padding-bottom: 1em;
+}
+
+.poll-buttons > button {
+  width: 20%;
+}
+
+#poll-response-pie {
+  display: none;
 }

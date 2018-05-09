@@ -18,10 +18,10 @@ class EnrollmentsController < ApplicationController
     @enrollment.enrollment_key = @enrollment_key
 
     #Find the class with the enrollments key
-    @class_to_join = Classgroup.where(unique_id: @enrollment_key)
+    @class_to_join = Classgroup.where(enrollment_key: @enrollment_key)
     @class_to_join = @class_to_join.to_ary.first
 
-    #Check if the class exists or we are a student
+    #Check if the class exists or we are not a student
     if !@class_to_join.nil? and current_user.student.present?
 
       if(@class_to_join.students.where(:user_id => current_user.id).exists?)

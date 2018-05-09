@@ -6,7 +6,7 @@
     </div>
 
     <% if @enrollment.errors.any? %>
-      <div class="enroll-error-explanation">
+      <div class="error-explanation">
         <h2>Error Prevented you from Enrolling</h2>
         <ul>
           <% @enrollment.errors.full_messages.each do |msg| %>
@@ -21,6 +21,7 @@
         </ul>
       </div>
     <% end %>
+
     <div class="classistant-form centered-form">
       <%= bootstrap_form_for @enrollment, :url => enrollment_path,  inline_errors: false do |f| %>
         <%= f.number_field :enrollment_key, label: 'Enrollment Key', class: 'enroll-input' %>

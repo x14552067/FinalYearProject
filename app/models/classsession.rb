@@ -3,6 +3,8 @@ class Classsession < ApplicationRecord
   has_many :chatmessages, dependent: :destroy
   has_many :questionmessages, dependent: :destroy
   has_many :answermessages, dependent: :destroy
-  has_many :students, through: :chatmessages
-  validates :topic, presence: true, uniqueness: true, case_sensitive: false
+  has_many :chatmessages
+  has_many :students
+  has_many :understanding_polls
+  validates :topic, presence: true
 end

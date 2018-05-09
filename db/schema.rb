@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180508153558) do
+ActiveRecord::Schema.define(version: 20180509185933) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(version: 20180508153558) do
     t.string "class_name"
     t.string "course_name"
     t.string "class_description"
-    t.integer "unique_id"
+    t.integer "enrollment_key"
     t.integer "image_id"
     t.bigint "lecturer_id"
     t.datetime "created_at", null: false
@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(version: 20180508153558) do
     t.datetime "start_time"
     t.datetime "end_time"
     t.string "topic"
+    t.integer "session_key"
     t.boolean "is_active"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -74,6 +75,12 @@ ActiveRecord::Schema.define(version: 20180508153558) do
 
   create_table "enrollments", force: :cascade do |t|
     t.integer "enrollment_key"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "joinsessions", force: :cascade do |t|
+    t.integer "session_key"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -115,6 +122,23 @@ ActiveRecord::Schema.define(version: 20180508153558) do
     t.index ["user_id"], name: "index_students_on_user_id"
   end
 
+  create_table "understanding_polls", force: :cascade do |t|
+    t.bigint "classsession_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["classsession_id"], name: "index_understanding_polls_on_classsession_id"
+  end
+
+  create_table "understanding_responses", force: :cascade do |t|
+    t.boolean "understood"
+    t.bigint "understanding_poll_id"
+    t.bigint "student_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["student_id"], name: "index_understanding_responses_on_student_id"
+    t.index ["understanding_poll_id"], name: "index_understanding_responses_on_understanding_poll_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -147,4 +171,5 @@ ActiveRecord::Schema.define(version: 20180508153558) do
   add_foreign_key "questionmessages", "students"
   add_foreign_key "student_responses", "students", column: "students_id"
   add_foreign_key "students", "users"
+  add_foreign_key "understanding_polls", "classsessions"
 end

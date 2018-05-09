@@ -6,6 +6,7 @@ class CreateClassSessions < ActiveRecord::Migration[5.1]
       t.datetime :start_time
       t.datetime :end_time
       t.string :topic
+      t.integer :session_key
       t.boolean :is_active
       t.timestamps
     end

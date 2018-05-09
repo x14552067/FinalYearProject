@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     resources :classgroups
     resource :enrollment
     resources :classsessions
+    resource :joinsession
 
   end
 

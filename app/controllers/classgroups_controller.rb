@@ -39,18 +39,21 @@ class ClassgroupsController < ApplicationController
   end
 
   def create
+    #Check if a Classgroup already exists, if they do, make the new ID equal to the next available ID.
+    # We do this because we need to generate the Classgroup Enrollment Key based on the ID (Unique ID) of the Classgroup, which is typically
+    # Only generated when the Record is saved.
     if (Classgroup.any?)
       @id = Classgroup.maximum(:id).next
     else
-      @id = 1
+      @id = 0
     end
 
     #Manually Set all the Fields because some of the fields are set behind the scenes
     @classgroup = Classgroup.new(classgroup_params)
     @classgroup.class_name = classgroup_params[:class_name]
     @classgroup.id = @id
-    @uniqueId = (@id * 1000 + rand(999))
-    @classgroup.unique_id = @uniqueId
+    @enrollment_key = generate_key(@id)
+    @classgroup.enrollment_key = @enrollment_key
     @classgroup.image_id = 1
     @classgroup.lecturer = current_user.lecturer
 

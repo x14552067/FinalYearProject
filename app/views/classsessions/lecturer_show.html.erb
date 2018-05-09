@@ -5,13 +5,16 @@
   </div>
 </div>
 <div class="row classistant-body">
-  <div class="col-md-12">
+  <div class="col-md-12 interaction-actions">
     <h1>Interaction Box</h1>
-
     <p>Below you will find a list of interactions you have set up for the class</p>
-
-    <%= line_chart @messages.group(:created_at).count %>
-
+    <button class="btn btn-primary poll-btn" id="poll-class-understanding" >Poll Understanding</button>
+    <button class="btn btn-danger poll-btn" id="end-poll" disabled>End Poll</button>
+  </div>
+</div>
+<div class="row classistant-body">
+  <div class="col-md-12" id="poll-response-pie">
+    <%= pie_chart @text_poll_data, id: "text-poll-responses"%>
   </div>
 </div>
 <div class="row classistant-body session-body">

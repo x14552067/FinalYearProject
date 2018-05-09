@@ -21,4 +21,9 @@ class ApplicationController < ActionController::Base
     return 4
   end
 
+  def generate_key(id)
+    @key = (id * 1000 + rand(999))
+    return @key
+  end
+
 end

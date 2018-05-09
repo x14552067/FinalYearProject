@@ -1,22 +1,39 @@
+require 'json'
 class ClasssessionsController < ApplicationController
-  layout 'session'
+  #SUPER AWESOME snippet of code suggestion from stack overflow to change the layout for a controller based on the action!
+  #https://stackoverflow.com/questions/3025784/rails-layouts-per-action
+  layout "session", only: [:show]
 
   def index
-    
+    redirect_to '/dashboard'
   end
 
   def show
 
+    #Find the session we want to join
     @session = Classsession.find(params[:id])
-    @messages = @session.chatmessages
-    @user = current_user
 
+    #Get all the Chat messages for the session
+    @messages = @session.chatmessages
+
+    #Get all the Questions asked for the session
     @questions = @session.questionmessages
+
+    #Get all the answers given for a session
     @answers = @session.answermessages
 
     #Combine the Questions and Answers into one collection and sort it by the created at date.
     # This should hopefully retain correct order. The variable name is meant to read Q & A
     @qanda = ( @questions + @answers ).sort_by(&:created_at)
+
+    #Get the current user logged in (Used for logic in the session)
+    @user = current_user
+
+    #Populate the graph with no data to begin with!
+    @text_poll_data = {
+        'Yes' => 0,
+        'No' => 0
+    }
 
     #This check is used to find out what the "User Type" is. This is either Lecturer or Student
     # I have abstracted the identifier into a random code just to make it more difficult for Students
@@ -50,6 +67,19 @@ class ClasssessionsController < ApplicationController
     @classgroup_id = classsession_params[:classgroup_id]
     @classgroup = Classgroup.find(@classgroup_id)
     @session.classgroup = @classgroup
+
+    #Check if a Sessions already exists, if they do, make the new ID equal to the next available ID.
+    # We do this because we need to generate the Session Key based on the ID of the Session, which is typically
+    # Only generated when the Record is saved.
+    if (Classsession.any?)
+      @id = Classsession.maximum(:id).next
+    else
+      @id = 0
+    end
+
+
+    @session.id = @id
+    @session.session_key = generate_key(@id)
 
     if @session.save
       redirect_to @session
