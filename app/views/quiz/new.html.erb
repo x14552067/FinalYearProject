@@ -4,7 +4,7 @@
 
     <div class="classistant-form">
 
-      <h2>Start a new Session</h2>
+      <h2>Create a new Quiz</h2>
       <hr class="hr-dark">
 
       <%= render 'form'%>
@@ -15,6 +15,6 @@
 
 <div class="row back-to-dashboard-btn">
   <div class="col-md-12 text-center">
-    <%= link_to("Back to Class", classgroup_path(@classgroup), class: "btn btn-primary not-enrolled-back-btn") %>
+    <%= link_to("Back to Dashboard", dashboard_index_url, class: "btn btn-primary not-enrolled-back-btn") %>
   </div>
 </div>

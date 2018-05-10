@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  quiz_name: MyString
+  classgroup: one
+  classsession: one
+  quizquestion: one
+
+two:
+  quiz_name: MyString
+  classgroup: two
+  classsession: two
+  quizquestion: two

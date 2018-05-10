@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180509215401) do
+ActiveRecord::Schema.define(version: 20180510154549) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -111,6 +111,35 @@ ActiveRecord::Schema.define(version: 20180509215401) do
     t.index ["student_id"], name: "index_questionmessages_on_student_id"
   end
 
+  create_table "quizquestionresponses", force: :cascade do |t|
+    t.bigint "quizquestion_id"
+    t.bigint "student_id"
+    t.string "answer"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["quizquestion_id"], name: "index_quizquestionresponses_on_quizquestion_id"
+    t.index ["student_id"], name: "index_quizquestionresponses_on_student_id"
+  end
+
+  create_table "quizquestions", force: :cascade do |t|
+    t.string "question_text"
+    t.string "question_answer"
+    t.bigint "quiz_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["quiz_id"], name: "index_quizquestions_on_quiz_id"
+  end
+
+  create_table "quizzes", force: :cascade do |t|
+    t.string "quiz_name"
+    t.bigint "classgroup_id"
+    t.bigint "classsession_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["classgroup_id"], name: "index_quizzes_on_classgroup_id"
+    t.index ["classsession_id"], name: "index_quizzes_on_classsession_id"
+  end
+
   create_table "student_responses", force: :cascade do |t|
     t.bigint "students_id"
     t.datetime "created_at", null: false
@@ -173,6 +202,11 @@ ActiveRecord::Schema.define(version: 20180509215401) do
   add_foreign_key "lecturers", "users"
   add_foreign_key "questionmessages", "classsessions"
   add_foreign_key "questionmessages", "students"
+  add_foreign_key "quizquestionresponses", "quizquestions"
+  add_foreign_key "quizquestionresponses", "students"
+  add_foreign_key "quizquestions", "quizzes"
+  add_foreign_key "quizzes", "classgroups"
+  add_foreign_key "quizzes", "classsessions"
   add_foreign_key "student_responses", "students", column: "students_id"
   add_foreign_key "students", "users"
   add_foreign_key "understanding_polls", "classsessions"

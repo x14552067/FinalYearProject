@@ -1,7 +1,7 @@
 <%= bootstrap_form_with(model: @classgroup, local: true) do |form| %>
   <% if @classgroup.errors.any? %>
     <div class="error-explanation">
-      <h2><%= pluralize(@classgroup.errors.count, "error") %> prohibited this classgroup from being saved:</h2>
+      <h2><%= pluralize(@classgroup.errors.count, "error") %> prohibited this Class from being saved:</h2>
 
       <ul>
       <% @classgroup.errors.full_messages.each do |message| %>

@@ -1,0 +1,31 @@
+// Place all the styles related to the quiz controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.question-group {
+  margin-top: 2.5em;
+  padding: 1em;
+  border: 2px #666666 solid;
+  -webkit-border-radius: .3em;
+  -moz-border-radius: .3em;
+  border-radius: .3em;
+  background-color: #DADFE1;
+  margin-bottom: 1em;
+  
+}
+
+.create-quiz-btn {
+  width: 80%;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.classistant-form > form > .error {
+  text-align: center;
+  font-size: 30px;
+  background-color: #EC644B;
+  border: 1px #EF4836 solid;
+  border-radius: .3em;
+  padding: 1em;
+  margin-bottom: 1em;
+}

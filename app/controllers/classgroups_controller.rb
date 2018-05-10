@@ -30,6 +30,7 @@ class ClassgroupsController < ApplicationController
     else
       @students = @classgroup.students
       @sessions = @classgroup.classsessions
+      @quizzes = @classgroup.quizzes
       render 'lecturer_show'
     end
 

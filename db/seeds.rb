@@ -54,3 +54,38 @@
 @ses.save
 
 
+# Create an Example Quiz for the System
+
+@quiz = Quiz.new
+@quiz.classgroup = @itp
+@quiz.quiz_name = "Sample Maths Quiz"
+
+@question_one = Quizquestion.new
+@question_one.question_text = "What is 1+1?"
+@question_one.question_answer = "2"
+
+@question_two = Quizquestion.new
+@question_two.question_text = "What is 2+1?"
+@question_two.question_answer = "3"
+
+@question_three = Quizquestion.new
+@question_three.question_text = "What is 3+1?"
+@question_three.question_answer = "4"
+
+@question_four = Quizquestion.new
+@question_four.question_text = "What is 4+1?"
+@question_four.question_answer = "5"
+
+@question_five = Quizquestion.new
+@question_five.question_text = "What is 5+1?"
+@question_five.question_answer = "6"
+
+@quiz.quizquestions << @question_one
+@quiz.quizquestions << @question_two
+@quiz.quizquestions << @question_three
+@quiz.quizquestions << @question_four
+@quiz.quizquestions << @question_five
+
+@quiz.save
+
+

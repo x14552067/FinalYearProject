@@ -1,0 +1,61 @@
+<%= bootstrap_form_for :new_quiz, :url => quiz_index_path, inline_errors: false do |form| %>
+
+  <% flash.each do |name, msg| -%>
+    <%= content_tag :div, msg, class: name %>
+  <% end -%>
+
+  <div class="form-group">
+    <div class="field">
+      <%= form.text_field :quiz_name, label: "Quiz Name" %>
+    </div>
+    <div class="field">
+      <%= form.hidden_field :classgroup, value: "#{@classgroup}"%>
+    </div>
+    <div class="question-group col-md-12 col-md-12">
+      <div class="field">
+        <%= form.text_area :question_one_text, label: "Question One Text" %>
+      </div>
+      <div class="field">
+        <%= form.text_field :question_one_answer, label: "Question One Answer" %>
+      </div>
+    </div>
+    <div class="question-group col-md-12">
+      <div class="field">
+        <%= form.text_area :question_two_text, label: "Question Two Text" %>
+      </div>
+      <div class="field">
+        <%= form.text_field :question_two_answer, label: "Question Two Answer" %>
+      </div>
+    </div>
+    <div class="question-group col-md-12">
+      <div class="field">
+        <%= form.text_area :question_three_text, label: "Question Three Text" %>
+      </div>
+      <div class="field">
+        <%= form.text_field :question_three_answer, label: "Question Three Answer" %>
+      </div>
+    </div>
+    <div class="question-group col-md-12">
+      <div class="field">
+        <%= form.text_area :question_four_text, label: "Question Four Text" %>
+      </div>
+      <div class="field">
+        <%= form.text_field :question_four_answer, label: "Question Four Answer" %>
+      </div>
+    </div>
+    <div class="question-group col-md-12">
+      <div class="field">
+        <%= form.text_area :question_five_text, label: "Question Five Text" %>
+      </div>
+      <div class="field">
+        <%= form.text_field :question_five_answer, label: "Question Five Answer" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions text-center">
+    <%= form.submit @button_text, class: "btn btn-primary create-quiz-btn" %>
+  </div>
+
+
+<% end %>
