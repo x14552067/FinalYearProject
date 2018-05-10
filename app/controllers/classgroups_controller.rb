@@ -3,8 +3,17 @@ class ClassgroupsController < ApplicationController
   def index
 
     if current_user.lecturer.nil?
-      @classes = current_user.student.classgroups
-      render 'student_view'
+
+      if current_user.student.classgroups.nil?
+        @classes = nil
+      else
+        @classes = current_user.student.classgroups
+
+      end
+        p "##########"
+        p @classes
+        render 'student_view'
+
     else
       @classes = current_user.lecturer.classgroups
       render 'lecturer_view'

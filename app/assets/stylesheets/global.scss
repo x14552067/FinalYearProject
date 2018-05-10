@@ -18,3 +18,21 @@
   -moz-border-radius: .3em;
   border-radius: .3em;
 }
+
+.jumbotron {
+  background-image: url('jumbo-background-2.jpg');
+  //background-color: #22313F;
+}
+
+.jumbotron > .heading {
+  color: white;
+  opacity: .9;
+}
+
+.back-to-dashboard-btn {
+  margin-top: 1em;
+}
+
+body {
+  background-image: url('background.png');
+}

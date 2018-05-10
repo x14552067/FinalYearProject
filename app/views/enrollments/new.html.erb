@@ -4,7 +4,6 @@
       <h2>Enroll in a Class</h2>
       <p>To enroll in a class simply enter the Enrollment key below and press submit</p>
     </div>
-
     <% if @enrollment.errors.any? %>
       <div class="error-explanation">
         <h2>Error Prevented you from Enrolling</h2>
@@ -21,12 +20,16 @@
         </ul>
       </div>
     <% end %>
-
     <div class="classistant-form centered-form">
-      <%= bootstrap_form_for @enrollment, :url => enrollment_path,  inline_errors: false do |f| %>
+      <%= bootstrap_form_for @enrollment, :url => enrollment_path, inline_errors: false do |f| %>
         <%= f.number_field :enrollment_key, label: 'Enrollment Key', class: 'enroll-input' %>
-        <%= f.submit "Enroll", class: "btn btn-primary"%>
+        <%= f.submit "Enroll", class: "btn btn-primary" %>
       <% end %>
     </div>
+  </div>
+</div>
+<div class="row back-to-dashboard-btn">
+  <div class="col-md-12 text-center">
+    <%= link_to("Back to Dashboard", dashboard_index_url, class: "btn btn-primary not-enrolled-back-btn") %>
   </div>
 </div>

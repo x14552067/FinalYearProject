@@ -23,3 +23,17 @@
   </div>
 <% end %>
 
+<% if !@classes.any? %>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="jumbotron">
+        <h1 class="heading">Oops! Looks like you haven't enrolled in any classes yet!</h1>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <%= link_to("Back to Dashboard", dashboard_index_url, class: "btn btn-primary not-enrolled-back-btn") %>
+    </div>
+  </div>
+<% end %>

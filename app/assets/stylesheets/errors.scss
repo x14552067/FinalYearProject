@@ -21,3 +21,30 @@
 .error-explanation > h2 {
   text-decoration: underline;
 }
+
+//Unfortunate repition in CSS due to the way Devise
+//generates form errors
+
+#error_explanation {
+  display: block;
+  width: 80%;
+  margin: 0 auto;
+  padding: 1em;
+  background-color: #EC644B !important;
+  border: 1px #EF4836 solid;
+  border-radius: .3em;
+  text-align: center;
+}
+
+#error_explanation > ul {
+  list-style-type: none;
+}
+
+#error_explanation > ul > li {
+  font-weight:bold;
+  font-style: italic;
+}
+
+#error_explanation > h2 {
+  text-decoration: underline;
+}

@@ -1,0 +1,16 @@
+.profile-body {
+  padding-top: 1em;
+}
+
+.statistics-table {
+
+}
+
+.statistics-table > tbody > tr:nth-child(odd) {
+  background-color: #DADFE1;
+}
+
+.stat-value {
+  text-align: center;
+}
+

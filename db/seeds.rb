@@ -8,16 +8,19 @@
 
 # Creating Lecturers to Populate the System
 
-@paul = Lecturer.new(first_name: "Paul", last_name: "Reid", institute: "NCI", user_id: 1)
-@admin = User.new(id: 0, email: "paulreid@mail.com", password: "123456", is_admin: true, lecturer: @paul)
+@admin = User.new(id: 9999, email: "paulreid@mail.com", password: "123456", is_admin: true)
+@paul = Lecturer.new(first_name: "Paul", last_name: "Reid", institute: "NCI", user_id: 9999)
+@admin.lecturer = @paul
 
 @paul.save
 @admin.save
 
 # Creating Students to Populate the System
 
-@aaron = Student.new(first_name: "Aaron", last_name: "Meaney", user_id: 2)
-@student = User.new(id: 1, email: "aaron@mail.com", password: "123456", is_admin: false, student: @aaron)
+@student = User.new(id: 9090, email: "aaron@mail.com", password: "123456", is_admin: false)
+@aaron = Student.new(first_name: "Aaron", last_name: "Meaney", user_id: 9090)
+@student.student = @aaron
+
 @aaron.save
 @student.save
 

@@ -3,6 +3,9 @@ class Lecturer < ApplicationRecord
   has_many :classgroups
   has_many :chatmessages
 
+  validates :first_name, presence: true, length: {minimum: 2}
+  validates :last_name, presence: true, length: {minimum: 2}
+
   def full_name
     return first_name + " " + last_name
   end

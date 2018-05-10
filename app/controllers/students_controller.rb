@@ -1,4 +1,17 @@
 class StudentsController < ApplicationController
+
+  def show
+    @student = Student.find(params[:id])
+
+    #Check to see if the Student is trying to view their own profile or an admin is
+    if current_user.is_admin? or current_user.student == @student
+
+    #If not, redirect them away
+    else
+      redirect_to dashboard_index_url
+    end
+  end
+
   def new
     @student = Student.new
   end
