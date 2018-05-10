@@ -12,9 +12,9 @@
           <% @join_session.errors.full_messages.each do |msg| %>
             <li>
               <%= if (msg.include? "Key")
-                    "Invalid Enrollment Key"
+                    "Invalid Session Key"
                   else
-                    "You are already Enrolled in that Class"
+                    "An error Occured while trying to join, please check your key and try again"
                   end %>
             </li>
           <% end %>

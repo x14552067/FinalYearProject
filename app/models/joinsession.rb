@@ -1,0 +1,3 @@
+class Joinsession < ApplicationRecord
+
+end

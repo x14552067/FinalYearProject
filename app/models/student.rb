@@ -1,7 +1,7 @@
 class Student < ApplicationRecord
   belongs_to :user
   has_and_belongs_to_many :classgroups
-  belongs_to :classsessions
+  has_and_belongs_to_many :classsessions
   has_many :understanding_responses
   has_many :chatmessages
 

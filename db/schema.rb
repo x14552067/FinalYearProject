@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180509185933) do
+ActiveRecord::Schema.define(version: 20180509215401) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,7 +61,6 @@ ActiveRecord::Schema.define(version: 20180509185933) do
 
   create_table "classsessions", force: :cascade do |t|
     t.bigint "classgroup_id"
-    t.bigint "students_id"
     t.datetime "start_time"
     t.datetime "end_time"
     t.string "topic"
@@ -70,7 +69,13 @@ ActiveRecord::Schema.define(version: 20180509185933) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["classgroup_id"], name: "index_classsessions_on_classgroup_id"
-    t.index ["students_id"], name: "index_classsessions_on_students_id"
+  end
+
+  create_table "classsessions_students", id: false, force: :cascade do |t|
+    t.bigint "student_id", null: false
+    t.bigint "classsession_id", null: false
+    t.index ["classsession_id", "student_id"], name: "index_classsessions_students_on_classsession_id_and_student_id"
+    t.index ["student_id", "classsession_id"], name: "index_classsessions_students_on_student_id_and_classsession_id"
   end
 
   create_table "enrollments", force: :cascade do |t|
@@ -165,7 +170,6 @@ ActiveRecord::Schema.define(version: 20180509185933) do
   add_foreign_key "chatmessages", "students"
   add_foreign_key "classgroups", "lecturers"
   add_foreign_key "classsessions", "classgroups"
-  add_foreign_key "classsessions", "students", column: "students_id"
   add_foreign_key "lecturers", "users"
   add_foreign_key "questionmessages", "classsessions"
   add_foreign_key "questionmessages", "students"

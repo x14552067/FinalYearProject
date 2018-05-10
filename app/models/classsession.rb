@@ -4,7 +4,7 @@ class Classsession < ApplicationRecord
   has_many :questionmessages, dependent: :destroy
   has_many :answermessages, dependent: :destroy
   has_many :chatmessages
-  has_many :students
+  has_and_belongs_to_many :students
   has_many :understanding_polls
   validates :topic, presence: true
 end
