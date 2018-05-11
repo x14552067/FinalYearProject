@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
 
   authenticate :user do
+    resources :lecturers
     resources :students
     resources :dashboard
     resources :classgroups

@@ -22,7 +22,7 @@
     <p class="chat-data" id="uid"><%= @user.id %></p>
     <p class="chat-data" id="utp"><%= @user_type %></p>
     <p class="chat-data" id="sid"><%= @session.id %></p>
-    <h1>Class Chat</h1>
+    <h1 class="message-box-heading">Class Chat</h1>
     <div id="chat-messages" class="message-box">
       <%= render 'chatmessage/list' %>
     </div>
@@ -32,14 +32,15 @@
     </form>
   </div>
   <div class="col-md-6">
-    <h1>Class Questions</h1>
+    <h1 class="message-box-heading">Class Questions</h1>
     <div id="question-messages" class="message-box">
       <%= render 'question_box_lecturer' %>
     </div>
     <form class="question-form">
       <input type="text" data-behavior="answer_send" class="message-field" id="answer-input" autocomplete="off" placeholder="Answer a Question..">
       <button class="btn btn-primary chat-btn" data-behavior="answer_send" id="answer-question">Send</button>
-      <label for="answer-question" class="answer-label">Answering Lorem's Question</label>
+      <label for="answer-question" class="answer-label"></label>
+      <p class="mid"></p>
     </form>
   </div>
 </div>

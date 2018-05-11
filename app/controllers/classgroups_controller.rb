@@ -38,7 +38,7 @@ class ClassgroupsController < ApplicationController
 
 
 
-      ClassistantMailer.with(student: @student).support_email.deliver_now
+      # ClassistantMailer.with(student: @student).support_email.deliver_now
 
     end
 

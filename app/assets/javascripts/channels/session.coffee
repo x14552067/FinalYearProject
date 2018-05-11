@@ -34,14 +34,36 @@ add_question_message = (payload) ->
   message_content = payload['content']
   timestamp = payload['timestamp']
   name = payload['name']
+  mid = payload['mid']
 
-  if(payload['anon'] == "t")
-    $('#question-messages').append("<p><span class='chat-timestamp'>" + timestamp + " </span> Anonymous: " + message_content + "</p>")
+  if $('#utp') == '4'
+
+    if(payload['anon'] == "t")
+      $('#question-messages').append("<p><span class='chat-timestamp'>" + timestamp + " </span> Anonymous: " + message_content + "</p>")
+    else
+      $('#question-messages').append("<p><span class='chat-timestamp'>" + timestamp + " </span> " + name + ": " + message_content + "</p>")
+
   else
-    $('#question-messages').append("<p><span class='chat-timestamp'>" + timestamp + " </span> " + name + ": " + message_content + "</p>")
+    if(payload['anon'] == "t")
+      $('#question-messages').append("<div class='question-wrap'><p><span class='chat-timestamp'>" + timestamp + "</span> Anonymous: " + message_content + "</p><p class='mid'>" + mid + "</p><button class='answer-btn'>Answer Question</button></div>")
+    else
+      $('#question-messages').append("<div class='question-wrap'><p><span class='chat-timestamp'>" + timestamp + "</span>" + name + ": " + message_content + "</p><p class='mid'>" + mid + "</p><button class='answer-btn'>Answer Question</button></div>")
 
-  messages = document.getElementById('chat-messages');
+  messages = document.getElementById('question-messages');
   messages.scrollTop = messages.scrollHeight;
+
+add_answer_message = (payload) ->
+
+  message_content = payload['content']
+  timestamp = payload['timestamp']
+  name = payload['name']
+
+  $('#question-messages').append("<p class='lecturer-message'><span class='chat-timestamp'>" + timestamp + " </span> <span class='lecturer-name'>" + name + "</span>: " + message_content + "</p>")
+
+  messages = document.getElementById('question-messages');
+  messages.scrollTop = messages.scrollHeight;
+
+
 
 ###########################################################################################
 #                       Code for Adding Polls Dynamically to pages                        #
@@ -60,6 +82,7 @@ start_text_poll = (payload) ->
 
 
 start_image_poll = (payload) ->
+
   id = payload
 
   #Show the Poll
@@ -255,10 +278,15 @@ join_session = ->
         update_quiz_graph(data)
 
       else if payload['type'] == "answer"
-
+        add_answer_message(payload)
 
 
         #Display the auld message in the Question box
+
+
+
+
+
 
 
 
@@ -417,6 +445,12 @@ join_session = ->
         mid: message_id
         content: content
 
+      console.log("Specific payload")
+      console.log(payload)
+
+      $('.answer-label').text("")
+      $('.question-form').find('.mid').text("")
+
       @perform 'send_answer_message', message: payload, room_id: s_id
 
 
@@ -437,8 +471,14 @@ join_session = ->
 
     $(document).on 'keypress', '[data-behavior~=answer_send]', (event) ->
       if event.keyCode is 13 # return/enter = send
-        question_id = $(this).parent().find(".mid")
-        App.session.answer_question(question_id)
+        question_id = $('.question-form').find(".mid").text()
+        console.log(question_id)
+
+        if question_id == ''
+          App.session.general_answer_question()
+        else
+          App.session.specific_answer_question(question_id)
+
         event.preventDefault()
 
   #Stop Quizzes from accidentally submitting!
@@ -451,6 +491,9 @@ join_session = ->
       messages = document.getElementById('chat-messages');
       messages.scrollTop = messages.scrollHeight;
 
+      questions = document.getElementById('question-messages');
+      questions.scrollTop = questions.scrollHeight;
+
       $("#send-chat").on 'click', (event) ->
         App.session.send_message("c", s_id)
         event.preventDefault()
@@ -460,8 +503,11 @@ join_session = ->
         event.preventDefault()
 
       $("#answer-question").on 'click', (event) ->
-        question_id = $(this).parent().find(".mid")
-        App.session.answer_question(question_id)
+        question_id = $('.question-form').find(".mid").text()
+        if question_id == ''
+          App.session.general_answer_question()
+        else
+          App.session.specific_answer_question(question_id)
         event.preventDefault()
 
       $("#poll-class-understanding-text").on 'click', (event) ->
@@ -516,6 +562,14 @@ join_session = ->
       $('#send-quiz').on 'click', (event) ->
         App.session.quiz_response()
         $('#quiz-question-div').slideToggle()
+        event.preventDefault()
+
+      $('.answer-btn').on 'click', (event) ->
+        mid = $(this).parent().find(".mid").text()
+        name = $(this).parent().find('p').text()
+
+        $('.question-form').find(".mid").text(""+mid)
+        $('.answer-label').text("Answering: " + name)
         event.preventDefault()
 
     activate_interactions()

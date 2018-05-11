@@ -140,3 +140,24 @@
 .answer-label {
   font-style: italic;
 }
+
+@media screen and (max-width: 992px) {
+  .message-box {
+    margin: 0 auto;
+  }
+
+  .chat-form, .question-form {
+    width: 80%;
+    margin: 0 auto;
+  }
+
+  .message-field {
+    width: 83%;
+  }
+  
+  .message-box-heading {
+    text-align: center;
+  }
+
+}
+

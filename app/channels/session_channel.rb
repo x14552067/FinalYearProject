@@ -139,6 +139,11 @@ class SessionChannel < ApplicationCable::Channel
     @sid = @payload['sid']
     @mid = @payload['mid']
 
+    p '######################'
+    p @mid
+    p '######################'
+
+
     #Parse the User ID and User Type (Checks if they are somehow Strings, if so, cancel the rest of the action)
     @uid = Integer(@uid) rescue -100
     @utp = Integer(@utp) rescue -100
@@ -163,14 +168,8 @@ class SessionChannel < ApplicationCable::Channel
       @user = @user.lecturer
       @save_answer.lecturer = @user
 
-
-
-      if @mid == "none"
-
-      else
-
+      if not @mid == "none"
         @save_answer.questionmessage = Questionmessage.find(@mid)
-
       end
 
 
@@ -179,6 +178,7 @@ class SessionChannel < ApplicationCable::Channel
         @payload['timestamp'] = @save_answer.created_at.strftime('%H:%M')
         @payload['name'] = @user.full_name
         @payload['type'] = 'answer'
+
         ActionCable.server.broadcast "session_channel_#{@sid}", message: @payload
       end
 
