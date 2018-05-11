@@ -108,6 +108,23 @@ end_poll = () ->
 
   chart.updateData(data)
 
+###########################################################################################
+#                       Code for Adding Quizzes Dynamically to Pages                      #
+###########################################################################################
+
+start_quiz = (questions) ->
+  #Set the auld Questions text
+  $('#quiz-question-one-text').text('' + questions['q1'])
+  $('#quiz-question-two-text').text('' + questions['q2'])
+  $('#quiz-question-three-text').text('' + questions['q3'])
+  $('#quiz-question-four-text').text('' + questions['q4'])
+  $('#quiz-question-five-text').text('' + questions['q5'])
+
+  #Display the Questions!
+  $('#quiz-question-div').slideToggle()
+
+
+
 
 ###########################################################################################
 #                       Code for Changing State of Interaction Buttons                    #
@@ -118,7 +135,7 @@ toggle_interaction_buttons = (interaction) ->
 #This means a Poll is Active or a Quiz is Active
   if interaction == "active"
     $('#poll-class-understanding-text').prop('disabled', true);
-    $('#poll-class-understanding-img').prop('disabled', true);
+    $('#poll-class-understanding-image').prop('disabled', true);
     $('.quiz-btn').prop('disabled', true)
     $('#end-poll').prop('disabled', false);
     $('#end-quiz').prop('disabled', false);
@@ -127,7 +144,7 @@ toggle_interaction_buttons = (interaction) ->
   else if interaction == "end"
 
     $('#poll-class-understanding-text').prop('disabled', false);
-    $('#poll-class-understanding-img').prop('disabled', false);
+    $('#poll-class-understanding-image').prop('disabled', false);
     $('.quiz-btn').prop('disabled', false)
     $('#end-poll').prop('disabled', true);
     $('#end-quiz').prop('disabled', true);
@@ -179,6 +196,11 @@ App.session = App.cable.subscriptions.create "SessionChannel",
 
     else if payload['type'] == 'text-poll-update' and $('#utp').text() == '191'
       update_text_poll_graph(data)
+
+#Check if the payload contains a field called q1, this means a quiz is incoming
+    else if 'q1' of payload
+      if $('#utp').text() == "4"
+        start_quiz(payload)
 
 
 
@@ -280,8 +302,34 @@ App.session = App.cable.subscriptions.create "SessionChannel",
 
     @perform 'update_poll_data', message: payload
 
+###########################################################################################
+#                   Code for Quizzing the Class over Websocket                            #
+###########################################################################################
+
+  quiz_class: (quiz_id) ->
+    payload =
+      quiz_id: quiz_id
+      sid: $('#sid').text()
+
+    @perform 'activate_quiz', message: payload
+
+  quiz_response: () ->
+
+    payload =
+      a1: $('#question-one-field').val()
+      a2: $('#question-two-field').val()
+      a3: $('#question-three-field').val()
+      a4: $('#question-four-field').val()
+      a5: $('#question-five-field').val()
+      qid: $('#qid').text()
+      uid: $('#uid').text()
+
+    @perform 'quiz_response'
 
 
+###########################################################################################
+#                   Code for Handling all the Realtime Inputs                             #
+###########################################################################################
 
 
   $(document).on 'keypress', '[data-behavior~=chat_send]', (event) ->
@@ -292,6 +340,11 @@ App.session = App.cable.subscriptions.create "SessionChannel",
   $(document).on 'keypress', '[data-behavior~=question_send]', (event) ->
     if event.keyCode is 13 # return/enter = send
       App.session.send_message("q")
+      event.preventDefault()
+
+#Stop Quizzes from accidentally submitting!
+  $(document).on 'keypress', '[data-behavior~=quiz_send]', (event) ->
+    if event.keyCode is 13 # return/enter = send
       event.preventDefault()
 
   activate_interactions = ->
@@ -325,12 +378,12 @@ App.session = App.cable.subscriptions.create "SessionChannel",
       event.preventDefault()
 
     $('#text-poll-yes').on 'click', (event) ->
-      App.session.text_poll_response('y')
+      App.session.poll_response('y')
       $('#text-poll-div').slideToggle()
       event.preventDefault()
 
     $('#text-poll-no').on 'click', (event) ->
-      App.session.text_poll_response('n')
+      App.session.poll_response('n')
       $('#text-poll-div').slideToggle()
       event.preventDefault()
 
@@ -348,6 +401,8 @@ App.session = App.cable.subscriptions.create "SessionChannel",
       toggle_interaction_buttons("active")
       $('#quiz-response-graph').slideToggle()
       console.log($(this).parent().find('p').text())
+      quiz_id = $(this).parent().find('p').text()
+      App.session.quiz_class(quiz_id)
 
     $("#end-quiz").on 'click', (event) ->
 #end_quiz()
@@ -358,7 +413,10 @@ App.session = App.cable.subscriptions.create "SessionChannel",
 
       event.preventDefault()
 
-
+    $('#send-quiz').on 'click', (event) ->
+      App.session.quiz_response()
+      $('#quiz-questions').slideToggle()
+      event.preventDefault()
 
 
 

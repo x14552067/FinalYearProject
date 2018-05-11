@@ -1,3 +1,4 @@
+require 'json'
 class SessionChannel < ApplicationCable::Channel
   def subscribed
     stream_from "session_channel"
@@ -207,7 +208,136 @@ class SessionChannel < ApplicationCable::Channel
     @payload['no'] = @no_count
 
     ActionCable.server.broadcast "session_channel", message: @payload
+  end
 
+  def activate_quiz(data)
+
+    #Get the data passed in and get the type of poll from it
+    @payload = data['message']
+    @session_id = @payload['sid']
+    @quiz_id = @payload['quiz_id']
+
+    #Get the Quiz and its questions
+    @quiz = Quiz.find(@quiz_id)
+    @quiz_questions = @quiz.quizquestions
+
+    @question_one = @quiz_questions.find(1)
+    @question_two = @quiz_questions.find(2)
+    @question_three = @quiz_questions.find(3)
+    @question_four = @quiz_questions.find(4)
+    @question_five = @quiz_questions.find(5)
+
+    @question_payload = {
+        'q1' => @question_one.question_text,
+        'q2' => @question_two.question_text,
+        'q3' => @question_three.question_text,
+        'q4' => @question_four.question_text,
+        'q5' => @question_five.question_text,
+        'qid' => @quiz.id
+    }
+
+    #Send Back the Questions to Display over MQTT
+    ActionCable.server.broadcast "session_channel", message: @question_payload
+  end
+
+  #Could probably refactor this method to use a for loop if I have time!
+  # Logic would simply iterate a counter from 1 - 5 and use that to reference
+  # @payload['a' + counter] and create a new question and assign it to a student etc etc and then I could
+  # Also use that counter to reference the @quiz_questions.find(counter)
+
+  def quiz_response(data)
+
+    #Get the Data from the Payload
+    @payload = data['message']
+    @quiz_id = @payload['qid']
+    @user_id = @payload['uid']
+
+    #Get all the Answers from the Payload
+    @answer_one = @payload['a1']
+    @answer_two = @payload['a2']
+    @answer_three = @payload['a3']
+    @answer_four = @payload['a4']
+    @answer_five = @payload['a5']
+
+    #Find the current poll
+    @active_quiz = Quiz.find(@quiz_id)
+
+    #Get the current User and the Student associated
+    @user = User.find(@user_id)
+    @student = @user.student
+
+    #Get the 5 Questions for the Quiz
+    @question_one = @quiz_questions.find(1)
+    @question_two = @quiz_questions.find(2)
+    @question_three = @quiz_questions.find(3)
+    @question_four = @quiz_questions.find(4)
+    @question_five = @quiz_questions.find(5)
+
+
+    #Create 5 Quiz Responses, Associate them to the Questions and populate their answer
+    @question_one_answer = Quizquestionresponse.new
+    @question_one_answer.answer = @answer_one
+    @question_one_answer.student = @student
+
+    @question_two_answer = Quizquestionresponse.new
+    @question_two_answer.answer = @answer_two
+    @question_two_answer.student = @student
+
+    @question_three_answer = Quizquestionresponse.new
+    @question_three_answer.answer = @answer_three
+    @question_three_answer.student = @student
+
+    @question_four_answer = Quizquestionresponse.new
+    @question_four_answer.answer = @answer_four
+    @question_four_answer.student = @student
+
+    @question_five_answer = Quizquestionresponse.new
+    @question_five_answer.answer = @answer_five
+    @question_five_answer.student = @student
+
+    #Relate the Responses to the Question
+    @question_one_answer.quizquestion = @question_one
+    @question_two_answer.quizquestion = @question_two
+    @question_three_answer.quizquestion = @question_three
+    @question_four_answer.quizquestion = @question_four
+    @question_five_answer.quizquestion = @question_five
+
+    #Figure out if the Answers are correct then flag it accordingly
+    if @question_one_answer.answer == @question_one.question_answer
+      @question_one_answer.correct = true
+    else
+      @question_one_answer.correct = false
+    end
+    if @question_two_answer.answer == @question_two.question_answer
+      @question_two_answer.correct = true
+    else
+      @question_two_answer.correct = false
+    end
+    if @question_three_answer.answer == @question_three.question_answer
+      @question_three_answer.correct = true
+    else
+      @question_three_answer.correct = false
+    end
+    if @question_four_answer.answer == @question_four.question_answer
+      @question_four_answer.correct = true
+    else
+      @question_four_answer.correct = false
+    end
+    if @question_five_answer.answer == @question_five.question_answer
+      @question_five_answer.correct = true
+    else
+      @question_five_answer.correct = false
+    end
+
+    #Save the answers and respond back to the channel
+    @question_one_answer.save
+    @question_two_answer.save
+    @question_three_answer.save
+    @question_four_answer.save
+    @question_five_answer.save
+
+    @payload['type'] = 'quiz-response'
+    ActionCable.server.broadcast "session_channel", message: @payload
 
   end
 

@@ -1,8 +1,7 @@
 <div class="row classistant-body">
   <div class="col-md-12">
     <h1 class="heading">Welcome to your Classistant Session</h1>
-    <h3><%= @session.topic %></h3>
-    <p>Details might go here, shall see</p>
+    <h4 class="heading">Todays topic: <%= @session.topic %></h4>
   </div>
 </div>
 <div class="row classistant-body">
@@ -12,7 +11,7 @@
       <p class="heading">Do you understand the content just covered?</p>
       <p class="poll-data" id="pid"></p>
       <div class="poll-buttons">
-        <button class="btn btn-primary" id="text-poll-yes">Yes, I understand!</button>
+        <button class="btn btn-success" id="text-poll-yes">Yes, I understand!</button>
         <button class="btn btn-danger" id="text-poll-no">No, I don't understand!</button>
       </div>
     </div>
@@ -21,14 +20,49 @@
       <p class="heading">Do you understand the content just covered?</p>
       <p class="poll-data" id="pid"></p>
       <div class="poll-buttons">
-
         <form>
           <%= image_submit_tag("yes.png", :alt => "A Smiling Face Representing you Understand the content", class: "img-circle dashboard-image", id: "image-poll-yes") %>
         </form>
         <form>
           <%= image_submit_tag("no.png", :alt => "A Frowning Face Representing you don't Understand the content", class: "img-circle dashboard-image", id: "image-poll-no") %>
         </form>
+      </div>
+    </div>
+    <div id="quiz-question-div">
+      <h3 class="heading">Your Lecturer has activated a Quiz</h3>
+      <p class="heading">Please fill out the following Questions and hit Submit when you're finished</p>
+      <p class="heading"><strong>Note: Any questions left blank will be submitted and graded as wrong! Make sure to check your answers before submtting!</strong></p>
+      <p class="quiz-data" id="qid"></p>
+      <div class="col-md-12 quiz-questions">
 
+        <form class="quiz-form">
+          <div class="col-md-12 quiz-question text-center">
+            <p id="quiz-question-one-text"></p>
+            <br>
+            <input type="text" class="quiz-field" id="question-one-field" data-behavior="chat_send">
+          </div>
+          <div class="col-md-12 quiz-question text-center">
+            <p id="quiz-question-two-text"></p>
+            <br>
+            <input type="text" class="quiz-field" id="question-two-field" data-behavior="chat_send">
+          </div>
+          <div class="col-md-12 quiz-question text-center">
+            <p id="quiz-question-three-text"></p>
+            <br>
+            <input type="text" class="quiz-field" id="question-three-field" data-behavior="chat_send">
+          </div>
+          <div class="col-md-12 quiz-question text-center">
+            <p id="quiz-question-four-text"></p>
+            <br>
+            <input type="text" class="quiz-field" id="question-four-field" data-behavior="chat_send">
+          </div>
+          <div class="col-md-12 quiz-question text-center">
+            <p id="quiz-question-five-text"></p>
+            <br>
+            <input type="text" class="quiz-field" id="question-five-field" data-behavior="chat_send"
+          </div>
+          <button class="btn btn-primary quiz-submit" id="send-quiz">Submit Answers</button>
+        </form>
       </div>
     </div>
   </div>

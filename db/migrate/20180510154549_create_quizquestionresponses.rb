@@ -4,7 +4,7 @@ class CreateQuizquestionresponses < ActiveRecord::Migration[5.1]
       t.references :quizquestion, foreign_key: true
       t.references :student, foreign_key: true
       t.string :answer
-
+      t.boolean :correct
       t.timestamps
     end
   end
