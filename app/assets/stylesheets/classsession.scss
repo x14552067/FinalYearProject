@@ -23,7 +23,7 @@
   margin-bottom: 5px;
 }
 
-.chat-data, .poll-data, .quiz-data {
+.chat-data, .poll-data, .quiz-data, .mid {
   display: none;
 }
 
@@ -121,4 +121,22 @@
 
 .quiz-form {
   margin-bottom: 1em;
+}
+
+.question-wrap > p {
+  margin-bottom: 0;
+}
+
+#question-messages > .question-wrap:nth-child(even){
+  background-color: #DADFE1;
+}
+
+.answer-btn {
+  font-size: 8px;
+  margin-bottom: .6em;
+
+}
+
+.answer-label {
+  font-style: italic;
 }

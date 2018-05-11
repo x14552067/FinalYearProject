@@ -36,12 +36,11 @@ class ClasssessionsController < ApplicationController
     }
 
     @quiz_data = {
-        '0%' => 0,
-        '20%' => 0,
-        '40%' => 0,
-        '60%' => 0,
-        '80%' => 0,
-        '100%' => 0
+        'Question One' => 0,
+        'Question Two' => 0,
+        'Question Three' => 0,
+        'Question Four' => 0,
+        'Question Five' => 0
     }
 
     #Get the Classgroup

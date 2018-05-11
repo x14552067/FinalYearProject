@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180510154549) do
+ActiveRecord::Schema.define(version: 20180511144051) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,6 +71,13 @@ ActiveRecord::Schema.define(version: 20180510154549) do
     t.index ["classgroup_id"], name: "index_classsessions_on_classgroup_id"
   end
 
+  create_table "classsessions_quizzes", id: false, force: :cascade do |t|
+    t.bigint "quiz_id", null: false
+    t.bigint "classsession_id", null: false
+    t.index ["classsession_id", "quiz_id"], name: "index_classsessions_quizzes_on_classsession_id_and_quiz_id"
+    t.index ["quiz_id", "classsession_id"], name: "index_classsessions_quizzes_on_quiz_id_and_classsession_id"
+  end
+
   create_table "classsessions_students", id: false, force: :cascade do |t|
     t.bigint "student_id", null: false
     t.bigint "classsession_id", null: false
@@ -115,6 +122,7 @@ ActiveRecord::Schema.define(version: 20180510154549) do
     t.bigint "quizquestion_id"
     t.bigint "student_id"
     t.string "answer"
+    t.boolean "correct"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["quizquestion_id"], name: "index_quizquestionresponses_on_quizquestion_id"

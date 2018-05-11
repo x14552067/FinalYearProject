@@ -5,7 +5,6 @@ class CreateAnswermessages < ActiveRecord::Migration[5.1]
       t.references :lecturer, foreign_key: true, null: true
       t.references :questionmessage, foreign_key: true, null: true
       t.string :content
-
       t.timestamps
     end
   end

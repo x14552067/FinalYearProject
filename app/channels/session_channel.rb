@@ -1,7 +1,7 @@
 require 'json'
 class SessionChannel < ApplicationCable::Channel
   def subscribed
-    stream_from "session_channel"
+    stream_from "session_channel_#{params[:room]}"
   end
 
   def unsubscribed
@@ -64,7 +64,7 @@ class SessionChannel < ApplicationCable::Channel
         @payload['timestamp'] = @save_message.created_at.strftime('%H:%M')
         @payload['name'] = @user.full_name
         @payload['type'] = 'chat'
-        ActionCable.server.broadcast "session_channel", message: @payload
+        ActionCable.server.broadcast "session_channel_#{@sid}", message: @payload
       end
 
       #End of Message being authentic and sending code
@@ -105,17 +105,8 @@ class SessionChannel < ApplicationCable::Channel
 
       #Get the User for the Message
       @user = User.find(@uid)
-
-      if @utp == 191
-        #lec
-        @user = @user.lecturer
-        @save_question.lecturer = @user
-
-      elsif @utp == 4
-        #stu
-        @user = @user.student
-        @save_question.student = @user
-      end
+      @user = @user.student
+      @save_question.student = @user
 
       if @anon == "t"
         @save_question.is_anon = true
@@ -127,7 +118,7 @@ class SessionChannel < ApplicationCable::Channel
         @payload['timestamp'] = @save_question.created_at.strftime('%H:%M')
         @payload['name'] = @user.full_name
         @payload['type'] = 'question'
-        ActionCable.server.broadcast "session_channel", message: @payload
+        ActionCable.server.broadcast "session_channel_#{@sid}", message: @payload
       end
 
       #End of Message being authentic and sending code
@@ -135,6 +126,66 @@ class SessionChannel < ApplicationCable::Channel
   end
 
   #End of Send Question Message Method
+
+  def send_answer_message(data)
+
+    #Take in the Payload from the sent Message
+    @payload = data['message']
+
+    #Get the contents of the paylod
+    @content = @payload['content']
+    @uid = @payload['uid']
+    @utp = @payload['utp']
+    @sid = @payload['sid']
+    @mid = @payload['mid']
+
+    #Parse the User ID and User Type (Checks if they are somehow Strings, if so, cancel the rest of the action)
+    @uid = Integer(@uid) rescue -100
+    @utp = Integer(@utp) rescue -100
+    @sid = Integer(@sid) rescue -100
+
+    #Cancelling in the case of String or Lecturer
+    if @uid == -100 or @utp == -100 or @sid == -100 or @utp == 4
+
+    else
+      #This far means the message is A O K to send
+
+      #Save the message to our DB
+      @save_answer = Answermessage.new
+      @save_answer.content = @content
+
+      #Get the Session for the Message and Associate them
+      @session = Classsession.find(@sid)
+      @save_answer.classsession = @session
+
+      #Get the User for the Message
+      @user = User.find(@uid)
+      @user = @user.lecturer
+      @save_answer.lecturer = @user
+
+
+
+      if @mid == "none"
+
+      else
+
+        @save_answer.questionmessage = Questionmessage.find(@mid)
+
+      end
+
+
+
+      if @save_answer.save
+        @payload['timestamp'] = @save_answer.created_at.strftime('%H:%M')
+        @payload['name'] = @user.full_name
+        @payload['type'] = 'answer'
+        ActionCable.server.broadcast "session_channel_#{@sid}", message: @payload
+      end
+
+      #End of Message being authentic and sending code
+    end
+  end
+
 
   def activate_poll(data)
 
@@ -152,7 +203,7 @@ class SessionChannel < ApplicationCable::Channel
       @poll_id = @active_poll.id
       @payload['type'] = 'poll'
       @payload['poll_id'] = @poll_id
-      ActionCable.server.broadcast "session_channel", message: @payload
+      ActionCable.server.broadcast "session_channel_#{@session_id}", message: @payload
     end
   end
 
@@ -162,6 +213,7 @@ class SessionChannel < ApplicationCable::Channel
     @payload = data['message']
     @poll_id = @payload['pid']
     @user_id = @payload['uid']
+    @sid = @payload['sid']
     @response = @payload['answer']
 
     #Find the current poll
@@ -187,7 +239,7 @@ class SessionChannel < ApplicationCable::Channel
     #Save the answer and if it saves, send the response back
     if @new_answer.save
       @payload['type'] = 'poll-response'
-      ActionCable.server.broadcast "session_channel", message: @payload
+      ActionCable.server.broadcast "session_channel_#{@sid}", message: @payload
     end
 
   end
@@ -196,6 +248,7 @@ class SessionChannel < ApplicationCable::Channel
 
     @payload = data['message']
     @poll_id = @payload['pid']
+    @sid = @payload['sid']
 
     @yes_count = UnderstandingResponse.where("understanding_poll_id = " + @poll_id + "AND understood = true")
     @yes_count = @yes_count.count
@@ -203,11 +256,11 @@ class SessionChannel < ApplicationCable::Channel
     @no_count = UnderstandingResponse.where("understanding_poll_id = " + @poll_id + "AND understood = false")
     @no_count = @no_count.count
 
-    @payload['type'] = 'text-poll-update'
+    @payload['type'] = 'poll-update'
     @payload['yes'] = @yes_count
     @payload['no'] = @no_count
 
-    ActionCable.server.broadcast "session_channel", message: @payload
+    ActionCable.server.broadcast "session_channel_#{@sid}", message: @payload
   end
 
   def activate_quiz(data)
@@ -217,9 +270,14 @@ class SessionChannel < ApplicationCable::Channel
     @session_id = @payload['sid']
     @quiz_id = @payload['quiz_id']
 
+
     #Get the Quiz and its questions
     @quiz = Quiz.find(@quiz_id)
     @quiz_questions = @quiz.quizquestions
+
+    #Associate the Quiz with a Class Session
+    @class_session = Classsession.find(@session_id)
+    @quiz.classsession << @class_session
 
     @question_one = @quiz_questions.find(1)
     @question_two = @quiz_questions.find(2)
@@ -237,7 +295,7 @@ class SessionChannel < ApplicationCable::Channel
     }
 
     #Send Back the Questions to Display over MQTT
-    ActionCable.server.broadcast "session_channel", message: @question_payload
+    ActionCable.server.broadcast "session_channel_#{@session_id}", message: @question_payload
   end
 
   #Could probably refactor this method to use a for loop if I have time!
@@ -251,6 +309,8 @@ class SessionChannel < ApplicationCable::Channel
     @payload = data['message']
     @quiz_id = @payload['qid']
     @user_id = @payload['uid']
+    @sid = @payload['sid']
+
 
     #Get all the Answers from the Payload
     @answer_one = @payload['a1']
@@ -261,6 +321,7 @@ class SessionChannel < ApplicationCable::Channel
 
     #Find the current poll
     @active_quiz = Quiz.find(@quiz_id)
+    @quiz_questions = @active_quiz.quizquestions
 
     #Get the current User and the Student associated
     @user = User.find(@user_id)
@@ -337,8 +398,58 @@ class SessionChannel < ApplicationCable::Channel
     @question_five_answer.save
 
     @payload['type'] = 'quiz-response'
-    ActionCable.server.broadcast "session_channel", message: @payload
+    ActionCable.server.broadcast "session_channel_#{@sid}", message: @payload
 
+  end
+
+  def update_quiz_data(data)
+
+    #Get the data from the payload
+    @payload = data['message']
+    @quiz_id = @payload['qid']
+    @session_id = @payload['sid']
+
+    #Find the Quiz the results are for
+    @quiz = Quiz.find(@quiz_id)
+
+    #Get all the questions for the Quiz
+    @question_one = @quiz_questions.find(1)
+    @question_two = @quiz_questions.find(2)
+    @question_three = @quiz_questions.find(3)
+    @question_four = @quiz_questions.find(4)
+    @question_five = @quiz_questions.find(5)
+
+
+    #Count the Correct Answers for each Question
+    @question_one_answer_count = @question_one.quizquestionresponse.count
+    @question_one_correct_count = @question_one.quizquestionresponse.where("correct = true").count
+
+    @question_two_answer_count = @question_two.quizquestionresponse.count
+    @question_two_correct_count = @question_two.quizquestionresponse.where("correct = true").count
+
+    @question_three_answer_count = @question_three.quizquestionresponse.count
+    @question_three_correct_count = @question_three.quizquestionresponse.where("correct = true").count
+
+    @question_four_answer_count = @question_four.quizquestionresponse.count
+    @question_four_correct_count = @question_four.quizquestionresponse.where("correct = true").count
+
+    @question_five_answer_count = @question_five.quizquestionresponse.count
+    @question_five_correct_count = @question_five.quizquestionresponse.where("correct = true").count
+
+    #Count how many people took the Quiz
+    @participant_count = (@question_one_answer_count + @question_two_answer_count + @question_three_answer_count +
+        @question_four_answer_count + @question_five_answer_count)
+
+    @quiz_data = {
+        'Question One' => @question_one_correct_count,
+        'Question Two' => @question_two_correct_count,
+        'Question Three' => @question_three_correct_count,
+        'Question Four' => @question_four_correct_count,
+        'Question Five' => @question_five_correct_count,
+        'Participants' => @participant_count,
+        'type' => 'quiz-update'
+    }
+    ActionCable.server.broadcast "session_channel_#{@session_id}", message: @quiz_data
   end
 
 
