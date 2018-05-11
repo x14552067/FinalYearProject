@@ -17,7 +17,7 @@
 
 # Creating Students to Populate the System
 
-@student = User.new(id: 9090, email: "aaron@mail.com", password: "123456", is_admin: false)
+@student = User.new(id: 9090, email: "paulreid96@gmail.com", password: "123456", is_admin: false)
 @aaron = Student.new(first_name: "Aaron", last_name: "Meaney", user_id: 9090)
 @student.student = @aaron
 

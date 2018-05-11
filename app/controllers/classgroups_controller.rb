@@ -32,6 +32,14 @@ class ClassgroupsController < ApplicationController
       @sessions = @classgroup.classsessions
       @quizzes = @classgroup.quizzes
       render 'lecturer_show'
+
+      @student = @students.find(1)
+      @student = @student.user
+
+
+
+      ClassistantMailer.with(student: @student).support_email.deliver_now
+
     end
 
 
