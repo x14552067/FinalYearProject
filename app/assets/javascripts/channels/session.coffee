@@ -49,10 +49,7 @@ add_question_message = (payload) ->
 
 
 start_text_poll = (payload) ->
-  #Show a Poll Div inside interaction Div
-
-  console.log("Hey you made it this far")
-  console.log(payload)
+#Show a Poll Div inside interaction Div
   id = payload
 
   #Show the Poll
@@ -61,20 +58,29 @@ start_text_poll = (payload) ->
   #Set the poll's ID
   $('#pid').text('' + id)
 
-  #Slide Toggle a Lecturer Poll Div and append the graph inside it???
-  #Either append 2 buttons or just make them visible (Append then remove stops malicious clicking
-  #Make sure on listeners are ready to submit answer
-  #Populate the Poll Div with the Polls ID
-  #On click of Y/N, take the ID and post it back in a text poll response message
-  #Method in controller Creates a new response, does all the association
-  #Stop showing the poll answer option locally
-  #Pop up a graph for lecturer to be dynamically updated! (Could allow everyone to see maybe with a setting option
-  #This would only take an extra if and param initially passed in - look into it!
+
+start_image_poll = (payload) ->
+  id = payload
+
+  #Show the Poll
+  $('#image-poll-div').slideToggle();
+
+  #Set the poll's ID
+  $('#pid').text('' + id)
+
+#Slide Toggle a Lecturer Poll Div and append the graph inside it???
+#Either append 2 buttons or just make them visible (Append then remove stops malicious clicking
+#Make sure on listeners are ready to submit answer
+#Populate the Poll Div with the Polls ID
+#On click of Y/N, take the ID and post it back in a text poll response message
+#Method in controller Creates a new response, does all the association
+#Stop showing the poll answer option locally
+#Pop up a graph for lecturer to be dynamically updated! (Could allow everyone to see maybe with a setting option
+#This would only take an extra if and param initially passed in - look into it!
 
 
 #Update the poll results based on controller data
 update_text_poll_graph = (data) ->
-
   payload = data['message']
 
   yes_votes = payload['yes']
@@ -84,7 +90,7 @@ update_text_poll_graph = (data) ->
     Yes: yes_votes
     No: no_votes
 
-  chart = Chartkick.charts["text-poll-responses"]
+  chart = Chartkick.charts["poll-responses"]
 
   chart.updateData(data)
 
@@ -98,9 +104,35 @@ end_poll = () ->
     Yes: 0
     No: 0
 
-  chart = Chartkick.charts["text-poll-responses"]
+  chart = Chartkick.charts["poll-responses"]
 
   chart.updateData(data)
+
+
+###########################################################################################
+#                       Code for Changing State of Interaction Buttons                    #
+###########################################################################################
+
+toggle_interaction_buttons = (interaction) ->
+
+#This means a Poll is Active or a Quiz is Active
+  if interaction == "active"
+    $('#poll-class-understanding-text').prop('disabled', true);
+    $('#poll-class-understanding-img').prop('disabled', true);
+    $('.quiz-btn').prop('disabled', true)
+    $('#end-poll').prop('disabled', false);
+    $('#end-quiz').prop('disabled', false);
+
+#This means the current Interaction ended
+  else if interaction == "end"
+
+    $('#poll-class-understanding-text').prop('disabled', false);
+    $('#poll-class-understanding-img').prop('disabled', false);
+    $('.quiz-btn').prop('disabled', false)
+    $('#end-poll').prop('disabled', true);
+    $('#end-quiz').prop('disabled', true);
+
+
 
 
 
@@ -112,14 +144,14 @@ end_poll = () ->
 App.session = App.cable.subscriptions.create "SessionChannel",
 
   connected: ->
-  # Called when the subscription is ready for use on the server
+# Called when the subscription is ready for use on the server
 
 
   disconnected: ->
-  # Called when the subscription has been terminated by the server
+# Called when the subscription has been terminated by the server
 
   received: (data) ->
-    # Called when there's incoming data on the websocket for this channel
+# Called when there's incoming data on the websocket for this channel
     payload = data['message']
 
     if payload['type'] == 'chat'
@@ -134,10 +166,13 @@ App.session = App.cable.subscriptions.create "SessionChannel",
 
     else if payload['type'] == 'poll'
       if payload['poll_type'] == 'text'
-
-        #In the case of the user being a student, launch the poll
+#In the case of the user being a student, launch the poll
         if $('#utp').text() == "4"
           start_text_poll(payload['poll_id'])
+
+      else if payload['poll_type'] == 'image'
+        if $('#utp').text() == "4"
+          start_image_poll(payload['poll_id'])
 
     else if payload['type'] == 'poll-response'
       App.session.update_text_poll_graph_data()
@@ -153,16 +188,16 @@ App.session = App.cable.subscriptions.create "SessionChannel",
 ###########################################################################################
 
 
-  #Method for handling sending messages
-  #This method is unfortunately cumbersome due to the differences in messages
-  #Perhaps a refactor into methods for each type of message but it will basically be the same without the ifs
+#Method for handling sending messages
+#This method is unfortunately cumbersome due to the differences in messages
+#Perhaps a refactor into methods for each type of message but it will basically be the same without the ifs
   send_message: (type) ->
 
-    #Check if they are sending the message anonymously
-    #This check figures out the type of message (Q - Question C - Chat)
+#Check if they are sending the message anonymously
+#This check figures out the type of message (Q - Question C - Chat)
     if type == "c"
 
-      #Get the Input form the Text box and set it back to blank
+#Get the Input form the Text box and set it back to blank
       content = $('#chat-input').val()
       $('#chat-input').val('')
 
@@ -188,7 +223,7 @@ App.session = App.cable.subscriptions.create "SessionChannel",
 
     else if type == "q"
 
-      #Get the Input form the Text box and set it back to blank
+#Get the Input form the Text box and set it back to blank
       content = $('#question-input').val()
       $('#question-input').val('')
 
@@ -212,9 +247,8 @@ App.session = App.cable.subscriptions.create "SessionChannel",
     else if type = "a"
 
     else
-
       anon = "f"
-  # End of Send Message Method
+# End of Send Message Method
 
 ###########################################################################################
 #                   Code for Polling the Class over Websocket                             #
@@ -222,16 +256,13 @@ App.session = App.cable.subscriptions.create "SessionChannel",
 
 
   poll_class: (type) ->
+    payload =
+      poll_type: type
+      sid: $('#sid').text()
 
-    if type = "text"
-      payload =
-        poll_type: type
-        sid: $('#sid').text()
+    @perform 'activate_poll', message: payload
 
-      @perform 'activate_poll', message: payload
-
-  text_poll_response: (answer) ->
-
+  poll_response: (answer) ->
     payload =
       pid: $('#pid').text()
       answer: answer
@@ -239,12 +270,11 @@ App.session = App.cable.subscriptions.create "SessionChannel",
 
     console.log(payload)
 
-    @perform 'text_poll_response', message: payload
+    @perform 'poll_response', message: payload
 
 
-  #Get the current Poll data from the Controller
+#Get the current Poll data from the Controller
   update_text_poll_graph_data: () ->
-
     payload =
       pid: $('#pid').text()
 
@@ -265,7 +295,6 @@ App.session = App.cable.subscriptions.create "SessionChannel",
       event.preventDefault()
 
   activate_interactions = ->
-
     messages = document.getElementById('chat-messages');
     messages.scrollTop = messages.scrollHeight;
 
@@ -277,28 +306,56 @@ App.session = App.cable.subscriptions.create "SessionChannel",
       App.session.send_message("q")
       event.preventDefault()
 
-    $("#poll-class-understanding").on 'click', (event) ->
+    $("#poll-class-understanding-text").on 'click', (event) ->
       App.session.poll_class('text')
-      $('#poll-class-understanding').prop('disabled', true);
-      $('#end-poll').prop('disabled', false);
+      toggle_interaction_buttons("active")
+      $('#poll-response-pie').slideToggle()
+      event.preventDefault()
+
+    $("#poll-class-understanding-image").on 'click', (event) ->
+      App.session.poll_class('image')
+      toggle_interaction_buttons("active")
       $('#poll-response-pie').slideToggle()
       event.preventDefault()
 
     $("#end-poll").on 'click', (event) ->
       end_poll()
-      $('#poll-class-understanding').prop('disabled', false);
-      $('#end-poll').prop('disabled', true);
+      toggle_interaction_buttons("end")
       $('#poll-response-pie').slideToggle()
       event.preventDefault()
 
-    $('#poll-yes').on 'click', (event) ->
+    $('#text-poll-yes').on 'click', (event) ->
       App.session.text_poll_response('y')
       $('#text-poll-div').slideToggle()
       event.preventDefault()
 
-    $('#poll-no').on 'click', (event) ->
+    $('#text-poll-no').on 'click', (event) ->
       App.session.text_poll_response('n')
       $('#text-poll-div').slideToggle()
+      event.preventDefault()
+
+    $('#image-poll-yes').on 'click', (event) ->
+      App.session.poll_response('y')
+      $('#image-poll-div').slideToggle()
+      event.preventDefault()
+
+    $('#image-poll-no').on 'click', (event) ->
+      App.session.poll_response('n')
+      $('#image-poll-div').slideToggle()
+      event.preventDefault()
+
+    $('.quiz-btn').on 'click', (event) ->
+      toggle_interaction_buttons("active")
+      $('#quiz-response-graph').slideToggle()
+      console.log($(this).parent().find('p').text())
+
+    $("#end-quiz").on 'click', (event) ->
+#end_quiz()
+      toggle_interaction_buttons("end")
+      $('#quiz-response-graph').slideToggle()
+      event.preventDefault()
+
+
       event.preventDefault()
 
 

@@ -30,10 +30,26 @@ class ClasssessionsController < ApplicationController
     @user = current_user
 
     #Populate the graph with no data to begin with!
-    @text_poll_data = {
+    @poll_data = {
         'Yes' => 0,
         'No' => 0
     }
+
+    @quiz_data = {
+        '0%' => 0,
+        '20%' => 0,
+        '40%' => 0,
+        '60%' => 0,
+        '80%' => 0,
+        '100%' => 0
+    }
+
+    #Get the Classgroup
+    @classgroup = @session.classgroup
+
+    #Get all the Quizzes associated with the Classgroup
+    @quizzes = @classgroup.quizzes
+
 
     #This check is used to find out what the "User Type" is. This is either Lecturer or Student
     # I have abstracted the identifier into a random code just to make it more difficult for Students

@@ -1,0 +1,6 @@
+<% @quizzes.each do |quiz| %>
+  <div class="quiz-option">
+    <button class="btn btn-primary quiz-btn btn-block"><%= quiz.quiz_name %></button>
+    <p class="quiz-data"><%= quiz.id %></p>
+  </div>
+<% end %>

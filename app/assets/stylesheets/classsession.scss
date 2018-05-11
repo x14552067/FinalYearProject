@@ -15,11 +15,15 @@
   border-radius: .2em;
 }
 
+.chat-form {
+  margin: 0 auto;
+}
+
 .message-box > p {
   margin-bottom: 5px;
 }
 
-.chat-data, .poll-data {
+.chat-data, .poll-data, .quiz-data {
   display: none;
 }
 
@@ -65,19 +69,34 @@
 
 }
 
-#text-poll-div {
+#text-poll-div, #image-poll-div {
   display: none;
 }
 
 .poll-buttons {
   text-align: center;
   padding-bottom: 1em;
+
 }
 
 .poll-buttons > button {
   width: 20%;
 }
 
-#poll-response-pie {
+#poll-response-pie, #quiz-response-graph {
   display: none;
+}
+
+.poll-btn {
+  width: 40%;
+}
+
+.interaction-box {
+  max-height: 15em;
+  overflow-y: scroll;
+}
+
+.quiz-option {
+  height: 34px;
+  margin-bottom: 5px;
 }

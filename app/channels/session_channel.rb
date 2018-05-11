@@ -50,7 +50,7 @@ class SessionChannel < ApplicationCable::Channel
       elsif @utp == 4
         #stu
         @user = @user.student
-        @save_message.student= @user
+        @save_message.student = @user
       end
 
       if @anon == "t"
@@ -66,7 +66,7 @@ class SessionChannel < ApplicationCable::Channel
         ActionCable.server.broadcast "session_channel", message: @payload
       end
 
-    #End of Message being authentic and sending code
+      #End of Message being authentic and sending code
     end
   end
 
@@ -113,7 +113,7 @@ class SessionChannel < ApplicationCable::Channel
       elsif @utp == 4
         #stu
         @user = @user.student
-        @save_question.student= @user
+        @save_question.student = @user
       end
 
       if @anon == "t"
@@ -131,69 +131,63 @@ class SessionChannel < ApplicationCable::Channel
 
       #End of Message being authentic and sending code
     end
-  end#End of Send Question Message Method
+  end
+
+  #End of Send Question Message Method
 
   def activate_poll(data)
 
     #Get the data passed in and get the type of poll from it
     @payload = data['message']
-    @poll_type = @payload['poll_type']
     @session_id = @payload['sid']
 
-    #Text Poll means just 2 buttons - Yes / No
-    if @poll_type == "text"
+    #Create a poll and save it
+    @active_poll = UnderstandingPoll.new
+    @active_poll.classsession_id = @session_id
 
-      #Create a poll and save it
-      @active_poll = UnderstandingPoll.new
-      @active_poll.classsession_id = @session_id
-
-
-      #If it saves - Not necessary but incase this ever didn't work the system wont crash!
-      if @active_poll.save
-        #Get the generated ID
-        @poll_id = @active_poll.id
-        @payload['type'] = 'poll'
-        @payload['poll_id'] = @poll_id
-        ActionCable.server.broadcast "session_channel", message: @payload
-      end
-
+    #If it saves - Not necessary but incase this ever didn't work the system wont crash!
+    if @active_poll.save
+      #Get the generated ID
+      @poll_id = @active_poll.id
+      @payload['type'] = 'poll'
+      @payload['poll_id'] = @poll_id
+      ActionCable.server.broadcast "session_channel", message: @payload
     end
   end
 
-  def text_poll_response(data)
+  def poll_response(data)
 
+    #Get the Data from the Payload
     @payload = data['message']
     @poll_id = @payload['pid']
     @user_id = @payload['uid']
     @response = @payload['answer']
 
+    #Find the current poll
     @active_poll = UnderstandingPoll.find(@poll_id)
+
+    #Get the current User and the Student associated
     @user = User.find(@user_id)
     @student = @user.student
 
-
-    p "##################"
-    p @active_poll
-    p "##################"
-
+    #Create the response to the poll
     @new_answer = UnderstandingResponse.new
     @new_answer.student = @student
     @new_answer.understanding_poll = @active_poll
 
+    #Check if the Student understood or now
     if @response == 'y'
       @new_answer.understood = true
-    else @response == 'n'
+    else
+      @response == 'n'
       @new_answer.understood = false
     end
 
+    #Save the answer and if it saves, send the response back
     if @new_answer.save
       @payload['type'] = 'poll-response'
       ActionCable.server.broadcast "session_channel", message: @payload
     end
-
-    p "##################"
-    p @new_answer
-    p "##################"
 
   end
 
@@ -215,9 +209,7 @@ class SessionChannel < ApplicationCable::Channel
     ActionCable.server.broadcast "session_channel", message: @payload
 
 
-
   end
-
 
 
 end

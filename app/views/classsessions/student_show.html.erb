@@ -7,21 +7,30 @@
 </div>
 <div class="row classistant-body">
   <div class="col-md-12 interaction-div" id="student-interaction">
-
     <div id="text-poll-div">
-
       <h3 class="heading">Your Lecturer has activated a Poll!</h3>
       <p class="heading">Do you understand the content just covered?</p>
       <p class="poll-data" id="pid"></p>
-
       <div class="poll-buttons">
-        <button class="btn btn-primary" id="poll-yes">Yes, I understand!</button>
-        <button class="btn btn-danger" id="poll-no">No, I don't understand!</button>
+        <button class="btn btn-primary" id="text-poll-yes">Yes, I understand!</button>
+        <button class="btn btn-danger" id="text-poll-no">No, I don't understand!</button>
       </div>
-
     </div>
+    <div id="image-poll-div">
+      <h3 class="heading">Your Lecturer has activated a Poll!</h3>
+      <p class="heading">Do you understand the content just covered?</p>
+      <p class="poll-data" id="pid"></p>
+      <div class="poll-buttons">
 
+        <form>
+          <%= image_submit_tag("yes.png", :alt => "A Smiling Face Representing you Understand the content", class: "img-circle dashboard-image", id: "image-poll-yes") %>
+        </form>
+        <form>
+          <%= image_submit_tag("no.png", :alt => "A Frowning Face Representing you don't Understand the content", class: "img-circle dashboard-image", id: "image-poll-no") %>
+        </form>
 
+      </div>
+    </div>
   </div>
 </div>
 <div class="row classistant-body session-body">
