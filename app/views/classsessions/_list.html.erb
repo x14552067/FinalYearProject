@@ -1,17 +1,31 @@
 <table class="table session-list-table">
   <thead>
   <tr>
-    <th scope="col">Session ID</th>
+    <th scope="col">Session Key</th>
     <th scope="col">Session Topic</th>
     <th scope="col">Session Start Time</th>
+    <th scope="col">Session End Time</th>
+    <th scope="col">Attendance</th>
+    <th scope="col">Review</th>
+    <th scope="col">Join</th>
   </tr>
   </thead>
   <tbody>
   <% @sessions.each do |session| %>
     <tr>
-      <td><%= session.id %></td>
+      <td><%= session.session_key %></td>
       <td><%= session.topic %></td>
-      <td><%= session.start_time %></td>
+      <td><%= session.start_time.strftime('%D - %H:%M') %></td>
+      <% if not session.end_time.nil? %>
+        <td><%= session.end_time.strftime('%D - %H:%M') %></td>
+        <%else %>
+      <td></td>
+      <% end %>
+      <td><%= session.students.count %></td>
+      <td><%= link_to "Review", '/classsessions/' + session.id.to_s + '/review', class: 'btn btn-info' %></td>
+      <% if session.is_active %>
+        <td><%= link_to "Join", '/classsessions/' + session.id.to_s, class: 'btn btn-primary' %></td>
+      <% end %>
     </tr>
   <% end %>
   </tbody>

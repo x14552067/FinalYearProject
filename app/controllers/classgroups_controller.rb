@@ -28,6 +28,11 @@ class ClassgroupsController < ApplicationController
       @students = @classgroup.students
       @sessions = @classgroup.classsessions
       @quizzes = @classgroup.quizzes
+      @poll_count = 0
+      @classgroup.classsessions.each do |ses|
+        @poll_count = @poll_count + ses.understanding_polls.count
+      end
+
       render 'lecturer_show'
 
       #@student = @students.find(1)

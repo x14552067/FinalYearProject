@@ -2,16 +2,37 @@
   <thead>
   <tr>
     <th scope="col">Student ID</th>
-    <th scope="col">First Name</th>
-    <th scope="col">Last Name</th>
+    <th scope="col">Name</th>
+    <th scope="col">Attendance</th>
+    <th scope="col">Understanding</th>
+    <th scope="col">Quiz Performance</th>
   </tr>
   </thead>
   <tbody>
   <% @students.each do |stud| %>
     <tr>
       <td><%= stud.id %></td>
-      <td><%= stud.first_name %></td>
-      <td><%= stud.last_name %></td>
+      <td><%= stud.full_name %></td>
+      <td><%= stud.classsessions.where("classgroup_id = " + @classgroup.id.to_s).count %> / <%= @sessions.count %></td>
+
+      <% @yes_count = 0 %>
+      <% stud.understanding_responses.each do |response| %>
+        <% @temp = response.understanding_poll %>
+        <% @temp_session = @temp.classsession %>
+        <% @temp_classgroup = @temp_session.classgroup %>
+        <% if @understood and @temp_classgroup == @classgroup %>
+          <% @yes_count = @yes_count + 1 %>
+        <% end %>
+      <% end %>
+
+      <% if @poll_count > 15 and @yes_count < 8 and @yes_count > 4 %>
+        <td class="student-warning"> <%= @yes_count %> / <%= @poll_count %>
+      <% elsif @poll_count > 15 and @yes_count < 4 %>
+        <td class="student-critical"> <%= @yes_count %> / <%= @poll_count %>
+      <% else %>
+        <td> <%= @yes_count %> / <%= @poll_count %>
+      <% end %>
+      </td>
     </tr>
   <% end %>
   </tbody>

@@ -51,6 +51,8 @@
 # Creating a Example Session for the System
 
 @ses = Classsession.new(id: 0, topic: "The Basics of Programming", classgroup_id: 0, session_key: 0000)
+@ses.start_time = "2018-05-12 11:32:41"
+@ses.end_time = "2018-05-12 12:32:41"
 @ses.save
 
 

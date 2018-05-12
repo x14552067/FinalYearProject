@@ -133,6 +133,7 @@ class ClasssessionsController < ApplicationController
   def end_session
     @session = Classsession.find(params[:classsession_id])
     @session.is_active = false
+    @session.end_time = Datetime.now
     @session.save
 
     redirect_to '/classsessions/' + @session.id.to_s + '/review'
