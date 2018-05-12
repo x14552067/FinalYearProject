@@ -4,12 +4,16 @@ Rails.application.routes.draw do
 
 
   authenticate :user do
-    resources :lecturers
+    resource :lecturer do
+      get :set_admin
+
+    end
     resources :students
     resources :dashboard
     resources :classgroups
     resources :classsessions do
       get :review
+      get :end_session
     end
     resources :quiz
     resource :enrollment

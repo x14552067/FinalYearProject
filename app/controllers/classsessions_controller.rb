@@ -125,9 +125,17 @@ class ClasssessionsController < ApplicationController
     #Get Questions and Answers for the Session (This composes the Q&A History box)
     @qanda = ( @questions + @answers ).sort_by(&:created_at)
 
-
     render 'review'
 
+
+  end
+
+  def end_session
+    @session = Classsession.find(params[:classsession_id])
+    @session.is_active = false
+    @session.save
+
+    redirect_to '/classsessions/' + @session.id.to_s + '/review'
 
   end
 

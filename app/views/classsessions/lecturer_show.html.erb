@@ -51,8 +51,12 @@
     <div class="col-md-6 text-center interaction-box">
       <h3 class="heading">Polling</h3>
       <div class="col-md-12 text-center">
-        <button class="btn btn-primary poll-btn btn-block" id="poll-class-understanding-text">Poll Understanding (Text)</button>
-        <button class="btn btn-primary poll-btn btn-block" id="poll-class-understanding-image">Poll Understanding (Image)</button>
+        <button class="btn btn-primary poll-btn btn-block" id="poll-class-understanding-text">Poll Understanding
+          (Text)
+        </button>
+        <button class="btn btn-primary poll-btn btn-block" id="poll-class-understanding-image">Poll Understanding
+          (Image)
+        </button>
       </div>
     </div>
     <div class="col-md-6  interaction-box">
@@ -61,5 +65,10 @@
         <%= render 'quiz/session_list' %>
       </div>
     </div>
+  </div>
+</div>
+<div class="row classistant-body">
+  <div class="col-md-12">
+    <%= link_to("End Session", classsession_end_session_url(@session), class: "btn btn-danger btn-block") %>
   </div>
 </div>
