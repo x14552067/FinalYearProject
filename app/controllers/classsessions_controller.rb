@@ -109,7 +109,24 @@ class ClasssessionsController < ApplicationController
 
   def review
 
-    @session = Classsession.find(params[:id])
+    #Get the Session to show the review for
+    @session = Classsession.find(params[:classsession_id])
+
+    #Get the Classgroup of the Session
+    @classgroup = @session.classgroup
+
+    #Get all the messages for the session
+    @messages = @session.chatmessages
+    #Get all the questions for the session
+    @questions= @session.questionmessages
+    #Get all the answers for the session
+    @answers= @session.answermessages
+
+    #Get Questions and Answers for the Session (This composes the Q&A History box)
+    @qanda = ( @questions + @answers ).sort_by(&:created_at)
+
+
+    render 'review'
 
 
   end

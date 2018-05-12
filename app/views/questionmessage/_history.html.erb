@@ -1,0 +1,11 @@
+<% @qanda.each do |msg| %>
+  <% if msg.is_a? (Questionmessage)%>
+    <% if msg.is_anon %>
+      <p><span class="chat-timestamp"><%= msg.created_at.strftime('%H:%M') %></span> Anonymous: <%= msg.content %></p>
+    <% else %>
+      <p><span class="chat-timestamp"><%= msg.created_at.strftime('%H:%M') %></span> <%= msg.student.full_name %>: <%= msg.content %></p>
+    <% end %>
+  <% else %>
+    <p class="lecturer-message"><span class="chat-timestamp"><%= msg.created_at.strftime('%H:%M') %></span> <span class="lecturer-name"><%= msg.lecturer.full_name %></span>: <%= msg.content %></p>
+  <% end %>
+<% end %>

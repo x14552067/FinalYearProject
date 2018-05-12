@@ -141,6 +141,24 @@
   font-style: italic;
 }
 
+.chat-history {
+  padding: 1em;
+  margin-bottom: 1em;
+  background-color: #D2D7D3;
+  min-height: 20em;
+  max-height: 20em;
+  overflow-y: scroll;
+  border: 1px #6C7A89 solid;
+  -webkit-border-radius: .3em;
+  -moz-border-radius: .3em;
+  border-radius: .3em;
+}
+
+.session-review-body {
+  margin-bottom: 1em;
+}
+
+
 @media screen and (max-width: 992px) {
   .message-box {
     margin: 0 auto;

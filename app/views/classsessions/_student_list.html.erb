@@ -1,0 +1,18 @@
+<table class="table session-list-table">
+  <thead>
+  <tr>
+    <th scope="col">Session Key</th>
+    <th scope="col">Session Topic</th>
+    <th scope="col">Session Start Time</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @sessions.each do |session| %>
+    <tr>
+      <td><%= session.session_key %></td>
+      <td><%= session.topic %></td>
+      <td><%= session.start_time %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

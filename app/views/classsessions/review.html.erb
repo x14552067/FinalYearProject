@@ -1,0 +1,60 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="jumbotron">
+      <h1 class="heading">Session Details</h1>
+    </div>
+  </div>
+</div>
+
+<div class="row classistant-body session-review-body">
+  <div class="col-md-12">
+    <h2 class="heading">Class Details</h2>
+    <hr class="hr-dark">
+    <%= render 'classgroups/student_heading' %>
+  </div>
+</div>
+<div class="row classistant-body session-review-body">
+  <div class="col-md-12">
+    <h2 class="heading">Session Details</h2>
+    <hr class="hr-dark">
+    <div class="class-heading">
+      <div class="class-details">
+        <h2>Topic: <%= @session.topic %></h2>
+        <div class="col-md-6">
+          <p><strong>Session Key:</strong> <%= @session.session_key%></p>
+          <p><strong>Attendance:</strong> <%= @session.students.count %></p>
+          <p><strong>Questions Asked:</strong> <%= @questions.count %></p>
+          <p><strong>Questions Answered:</strong> FIGURE THIS OUT</p>
+        </div>
+        <div class="col-md-6">
+          <p><strong>Messages Sent:</strong> <%= @messages.count %></p>
+          <p><strong>Total Answers:</strong> <%= @answers.count %></p>
+          <p><strong>Number of Polls:</strong> <%= @session.understanding_polls.count %></p>
+          <p><strong>Number of Quizzes:</strong> <%= @session.quizzes.count %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row classistant-body session-review-body">
+  <div class="col-md-12">
+    <h2 class="heading">Questions and Answers Table</h2>
+      <%= render 'questionmessage/question_answer_table' %>
+  </div>
+</div>
+<div class="row classistant-body session-review-body">
+  <div class="col-md-12">
+    <h2 class="heading">Chat History</h2>
+    <div class="chat-history">
+      <%= render 'chatmessage/list' %>
+    </div>
+  </div>
+</div>
+<div class="row classistant-body session-review-body">
+  <div class="col-md-12">
+    <h2 class="heading">Questions and Answers History</h2>
+    <div class="chat-history">
+      <%= render 'questionmessage/history' %>
+    </div>
+  </div>
+</div>

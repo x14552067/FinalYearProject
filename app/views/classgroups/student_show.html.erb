@@ -1,42 +1,6 @@
-<div class="row class-heading class-body">
+<%= render 'student_heading' %>
+<div class="row class-body">
   <div class="col-md-12">
-    <div class="col-md-6 class-top-row">
-      <div class="class-heading">
-        <div class="class-details">
-          <h2><%= @classgroup.class_name %> - Overview</h2>
-          <p><strong>Course:</strong> <%= @classgroup.course_name %></p>
-          <p><strong>Lecturer:</strong> <%= @classgroup.lecturer.full_name %></p>
-          <p><strong>Enrollment Key:</strong> <%= @classgroup.enrollment_key %></p>
-          <p class="class-description">"<%= @classgroup.class_description %>"</p>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6 class-top-row">
-      <div class="class-heading">
-        <div class="class-details">
-          <div class="class-image-container">
-            <%= render 'class_image' %>
-          </div>
-        </div>
-      </div>
-    </div>
-    <hr class="hr-dark">
-  </div>
-</div>
-
-<div class="row class-body">
-  <div class="col-md-6">
     <h2>List of Sessions</h2>
-  </div>
-  <div class="col-md-6">
-    <h2>List of Students</h2>
-  </div>
-</div>
-<div class="row class-body">
-  <div class="col-md-6">
-    <h2>Quizzes</h2>
-  </div>
-  <div class="col-md-6">
-    <h2>Settings</h2>
   </div>
 </div>

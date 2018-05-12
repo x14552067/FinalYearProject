@@ -22,6 +22,7 @@ class ClassgroupsController < ApplicationController
     @student_count = @classgroup.students.to_ary.count
 
     if current_user.lecturer.nil?
+      @sessions = @classgroup.classsessions
       render 'student_show'
     else
       @students = @classgroup.students
@@ -70,10 +71,6 @@ class ClassgroupsController < ApplicationController
 
     #Get the Image passed in
     @image = classgroup_params[:image_id]
-
-    p "##############"
-    p @image
-    p "##############"
 
     #Determine the Image based on the Param Passed from the form
     if @image == "Computer"

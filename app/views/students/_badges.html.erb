@@ -1,15 +1,84 @@
-<div class="col-md-2">
-  <p>Hello</p>
+<!--Attendance-->
+<div class="row badge-row">
+  <% if @student.classsessions.count >= 5 %>
+    <div class="col-md-4 text-center">
+      <%= image_tag("bronze-badge.png", :alt => "An Image of a Bronze Medal", class: "img-circle badge-image") %>
+      <p>Attendance I</p>
+    </div>
+  <% end %>
+  <% if @student.classsessions.count >= 10%>
+    <div class="col-md-4 text-center">
+      <%= image_tag("silver-badge.png", :alt => "An Image of a Silver Medal", class: "img-circle badge-image") %>
+      <p>Attendance II</p>
+    </div>
+  <% end %>
+  <% if @student.classsessions.count >= 15%>
+    <div class="col-md-4 text-center">
+      <%= image_tag("gold-badge.png", :alt => "An Image of a Gold Medal", class: "img-circle badge-image") %>
+      <p>Attendance III</p>
+    </div>
+  <% end %>
 </div>
-<div class="col-md-2">
-  <p>Hello</p>
+<!--Chattyness-->
+<div class="row badge-row">
+  <% if @student.chatmessages.count >= 5 %>
+    <div class="col-md-4 text-center">
+      <%= image_tag("bronze-badge.png", :alt => "An Image of a Bronze Medal", class: "img-circle badge-image") %>
+      <p>Chatty I</p>
+    </div>
+  <% end %>
+  <% if @student.chatmessages.count >= 30 %>
+    <div class="col-md-4 text-center">
+      <%= image_tag("silver-badge.png", :alt => "An Image of a Silver Medal", class: "img-circle badge-image") %>
+      <p>Chatty II</p>
+    </div>
+  <% end %>
+  <% if @student.chatmessages.count >= 100 %>
+    <div class="col-md-4 text-center">
+      <%= image_tag("gold-badge.png", :alt => "An Image of a Gold Medal", class: "img-circle badge-image") %>
+      <p>Chatty III</p>
+    </div>
+  <% end %>
 </div>
-<div class="col-md-2">
-  <p>Hello</p>
+<!--Questions Asked-->
+<div class="row badge-row">
+  <% if @student.questionmessages.count >= 5%>
+    <div class="col-md-4 text-center">
+      <%= image_tag("bronze-badge.png", :alt => "An Image of a Bronze Medal", class: "img-circle badge-image") %>
+      <p>Inquisitive I</p>
+    </div>
+  <% end %>
+  <% if @student.questionmessages.count >= 10%>
+    <div class="col-md-4 text-center">
+      <%= image_tag("silver-badge.png", :alt => "An Image of a Silver Medal", class: "img-circle badge-image") %>
+      <p>Inquisitive II</p>
+    </div>
+  <% end %>
+  <% if @student.questionmessages.count >= 15 %>
+    <div class="col-md-4 text-center">
+      <%= image_tag("gold-badge.png", :alt => "An Image of a Gold Medal", class: "img-circle badge-image") %>
+      <p>Inquisitive III</p>
+    </div>
+  <% end %>
 </div>
-<div class="col-md-2">
-  <p>Hello</p>
-</div>
-<div class="col-md-2">
-  <p>Hello</p>
+<!--Quiz Results-->
+<div class="row badge-row">
+  <% if @student.quizquestionresponses.where("correct = true").count > 5 %>
+    <div class="col-md-4 text-center">
+      <%= image_tag("bronze-badge.png", :alt => "An Image of a Bronze Medal", class: "img-circle badge-image") %>
+      <p>Genius I</p>
+    </div>
+  <% end %>
+  <% if @student.quizquestionresponses.where("correct = true").count > 15 %>
+    <div class="col-md-4 text-center">
+      <%= image_tag("silver-badge.png", :alt => "An Image of a Silver Medal", class: "img-circle badge-image") %>
+      <p>Genius II</p>
+    </div>
+  <% end %>
+  <% if @student.quizquestionresponses.where("correct = true").count > 25 %>
+    <div class="col-md-4 text-center">
+      <%= image_tag("gold-badge.png", :alt => "An Image of a Gold Medal", class: "img-circle badge-image") %>
+      <p>Genius III</p>
+    </div>
+  <% end %>
 </div>

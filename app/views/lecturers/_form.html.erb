@@ -1,0 +1,44 @@
+<div class="row">
+
+  <div class="col-md-6 col-md-offset-3 account-form">
+
+    <div class="classistant-form">
+
+      <h2>Create a Lecturer from Student</h2>
+      <h5>Note: This acts as an account reset and all existing Student data will be lost</h5>
+      <hr>
+
+
+      <%= bootstrap_form_for @lecturer do |form| %>
+        <% if @lecturer.errors.any? %>
+          <div class="error_explanation">
+            <h2><%= pluralize(student.errors.count, "error") %> prohibited this student from being saved:</h2>
+            <ul>
+              <% @lecturer.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <div class="form-group">
+
+          <div class="field">
+            <%= form.number_field :student_id, label: 'Student ID To Promote to Lecturer' %>
+          </div>
+          <div class="field">
+            <%= form.text_field :institute, label: "Institution" %>
+          </div>
+        </div>
+
+        <div class="actions">
+          <%= form.submit "Complete Registration", class: "btn btn-primary" %>
+        </div>
+
+        </div>
+      <% end %>
+      </div>
+</div>
+
+
+
