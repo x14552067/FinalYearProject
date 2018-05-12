@@ -17,7 +17,7 @@
 
 # Creating Students to Populate the System
 
-@student = User.new(id: 9090, email: "paulreid96@mail.com", password: "123456", is_admin: false)
+@student = User.new(id: 9090, email: "aaron@mail.com", password: "123456", is_admin: false)
 @aaron = Student.new(first_name: "Aaron", last_name: "Meaney", user_id: 9090)
 @student.student = @aaron
 
@@ -33,19 +33,19 @@
 @itp.save
 
 @iwd = Classgroup.new(id: 1, class_name: "Intro to Web Design", course_name: "BSHC",
-                      class_description: "Learn to make Basic Websites using HTML, CSS and JS", enrollment_key: 9101, image_id: 1, lecturer_id: 1)
+                      class_description: "Learn to make Basic Websites using HTML, CSS and JS", enrollment_key: 9101, image_id: 2, lecturer_id: 1)
 @iwd.save
 
 @itc = Classgroup.new(id: 2, class_name: "Introduction to Computers", course_name: "BSHC",
-                      class_description: "Learning All about how to use a Computer", enrollment_key: 9102, image_id: 1, lecturer_id: 1)
+                      class_description: "Learning All about how to use a Computer", enrollment_key: 9102, image_id: 3, lecturer_id: 1)
 @itc.save
 
 @iot = Classgroup.new(id: 3, class_name: "Internet of Things", course_name: "BSHC",
-                      class_description: "Solving the worlds problems 1 MQTT message at a time", enrollment_key: 9103, image_id: 1, lecturer_id: 1)
+                      class_description: "Solving the worlds problems 1 MQTT message at a time", enrollment_key: 9103, image_id: 4, lecturer_id: 1)
 @iot.save
 
 @cad = Classgroup.new(id: 4, class_name: "Cloud Application Development", course_name: "BSHC",
-                      class_description: "Just know that Rails is never sorry", enrollment_key: 9104, image_id: 1, lecturer_id: 1)
+                      class_description: "Just know that Rails is never sorry", enrollment_key: 9104, image_id: 5, lecturer_id: 1)
 @cad.save
 
 # Creating a Example Session for the System
@@ -57,9 +57,7 @@
 # Create an Example Quiz for the System
 
 @quiz = Quiz.new
-@quiz.classgroup_id = 0
-@quiz.quiz_name = "Sample Maths Quiz"
-@quiz.save
+@quiz.classgroup = @itp
 
 @question_one = Quizquestion.new
 @question_one.question_text = "What is 1+1?"
@@ -81,17 +79,20 @@
 @question_five.question_text = "What is 5+1?"
 @question_five.question_answer = "6"
 
-@question_one.quiz = @quiz
-@question_two.quiz = @quiz
-@question_three.quiz = @quiz
-@question_four.quiz = @quiz
-@question_five.quiz = @quiz
+@quiz.save
+
+@quiz.quizquestions << @question_one
+@quiz.quizquestions << @question_one
+@quiz.quizquestions << @question_one
+@quiz.quizquestions << @question_one
+@quiz.quizquestions << @question_one
+
+
+@quiz.save
 
 @question_one.save
 @question_two.save
 @question_three.save
 @question_four.save
 @question_five.save
-
-
 
