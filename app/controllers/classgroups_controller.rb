@@ -8,12 +8,8 @@ class ClassgroupsController < ApplicationController
         @classes = nil
       else
         @classes = current_user.student.classgroups
-
       end
-        p "##########"
-        p @classes
         render 'student_view'
-
     else
       @classes = current_user.lecturer.classgroups
       render 'lecturer_view'
@@ -33,10 +29,8 @@ class ClassgroupsController < ApplicationController
       @quizzes = @classgroup.quizzes
       render 'lecturer_show'
 
-      @student = @students.find(1)
-      @student = @student.user
-
-
+      #@student = @students.find(1)
+      #@student = @student.user
 
       # ClassistantMailer.with(student: @student).support_email.deliver_now
 
@@ -72,8 +66,31 @@ class ClassgroupsController < ApplicationController
     @classgroup.id = @id
     @enrollment_key = generate_key(@id)
     @classgroup.enrollment_key = @enrollment_key
-    @classgroup.image_id = 1
     @classgroup.lecturer = current_user.lecturer
+
+    #Get the Image passed in
+    @image = classgroup_params[:image_id]
+
+    p "##############"
+    p @image
+    p "##############"
+
+    #Determine the Image based on the Param Passed from the form
+    if @image == "Computer"
+      @classgroup.image_id = 1
+    elsif @image == "Web"
+      @classgroup.image_id = 2
+    elsif @image == "Business"
+      @classgroup.image_id = 3
+    elsif @image == "Statistics"
+      @classgroup.image_id = 4
+    elsif @image == "Generic"
+      @classgroup.image_id = 5
+    elsif @image == "Comical"
+      @classgroup.image_id = 6
+    else
+      @classgroup.image_id = 1
+    end
 
     if @classgroup.save
       redirect_to @classgroup
@@ -95,7 +112,7 @@ class ClassgroupsController < ApplicationController
 
   private
   def classgroup_params
-    params.require(:classgroup).permit(:class_name, :course_name, :class_description, :classgroup)
+    params.require(:classgroup).permit(:class_name, :course_name, :class_description, :classgroup, :image_id)
   end
 
 end

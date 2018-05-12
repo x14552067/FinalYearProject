@@ -17,7 +17,7 @@
 
 # Creating Students to Populate the System
 
-@student = User.new(id: 9090, email: "paulreid96@gmail.com", password: "123456", is_admin: false)
+@student = User.new(id: 9090, email: "paulreid96@mail.com", password: "123456", is_admin: false)
 @aaron = Student.new(first_name: "Aaron", last_name: "Meaney", user_id: 9090)
 @student.student = @aaron
 
@@ -57,8 +57,9 @@
 # Create an Example Quiz for the System
 
 @quiz = Quiz.new
-@quiz.classgroup = @itp
+@quiz.classgroup_id = 0
 @quiz.quiz_name = "Sample Maths Quiz"
+@quiz.save
 
 @question_one = Quizquestion.new
 @question_one.question_text = "What is 1+1?"
@@ -80,12 +81,17 @@
 @question_five.question_text = "What is 5+1?"
 @question_five.question_answer = "6"
 
-@quiz.quizquestions << @question_one
-@quiz.quizquestions << @question_two
-@quiz.quizquestions << @question_three
-@quiz.quizquestions << @question_four
-@quiz.quizquestions << @question_five
+@question_one.quiz = @quiz
+@question_two.quiz = @quiz
+@question_three.quiz = @quiz
+@question_four.quiz = @quiz
+@question_five.quiz = @quiz
 
-@quiz.save
+@question_one.save
+@question_two.save
+@question_three.save
+@question_four.save
+@question_five.save
+
 
 

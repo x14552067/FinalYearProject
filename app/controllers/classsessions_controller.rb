@@ -107,6 +107,13 @@ class ClasssessionsController < ApplicationController
 
   end
 
+  def review
+
+    @session = Classsession.find(params[:id])
+
+
+  end
+
   private
   def classsession_params
     params.require(:classsession).permit(:topic, :end_time, :classgroup_id)

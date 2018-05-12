@@ -14,23 +14,30 @@
   <div class="col-md-3 dashboard-option">
     <%= image_tag("class-session-icon.png", :alt => "A Placeholder Image", class: "img-circle dashboard-image") %>
     <br>
-    <%= link_to("Join Session", new_joinsession_url, class: "btn btn-primary dashboard-btn dashboard-session-btn") %>
-  </div>
-  <div class="col-md-3 dashboard-option">
-    <%= image_tag("enroll-icon.png", :alt => "An image of a clipboard representing your Enrolling in a classe", class: "img-circle dashboard-image") %>
-    <br>
-    <%= link_to("Enroll", enrollment_url, class: "btn btn-primary dashboard-btn dashboard-enroll-btn") %>
+    <%= link_to("Create a Class", new_classgroup_url, class: "btn btn-primary dashboard-btn dashboard-session-btn") %>
   </div>
   <div class="col-md-3 dashboard-option">
     <%= image_tag("profile-icon.png", :alt => "An Image Representing a Profile", class: "img-circle dashboard-image") %>
     <br>
     <%= link_to("Profile", lecturer_url(@lecturer), class: "btn btn-primary dashboard-btn dashboard-profile-btn") %>
   </div>
-</div>
-<div class="row">
   <div class="col-md-3 dashboard-option">
     <%= image_tag("settings.png", :alt => "An image of tools representing settings", class: "img-circle dashboard-image") %>
     <br>
     <%= link_to("Settings", edit_user_registration_path, class: "btn btn-primary dashboard-btn dashboard-settings-btn") %>
   </div>
 </div>
+<% if current_user.is_admin %>
+  <div class="row dashboard-row">
+    <div class="col-md-3 dashboard-option">
+      <%= image_tag("admin.png", :alt => "A Placeholder Image", class: "img-circle dashboard-image") %>
+      <br>
+      <%= link_to("Add Lecturer", new_joinsession_url, class: "btn btn-primary dashboard-btn dashboard-admin-btn") %>
+    </div>
+    <div class="col-md-3 dashboard-option">
+      <%= image_tag("admin.png", :alt => "A Placeholder Image", class: "img-circle dashboard-image") %>
+      <br>
+      <%= link_to("Set Admin", new_joinsession_url, class: "btn btn-primary dashboard-btn dashboard-admin-btn") %>
+    </div>
+  </div>
+<% end %>

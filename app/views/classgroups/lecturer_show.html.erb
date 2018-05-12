@@ -15,7 +15,7 @@
       <div class="class-heading">
         <div class="class-details">
           <div class="class-image-container text-center">
-            <%= image_tag("computer-class-icon.svg", :alt => "A Picture of a Computer", class: "img-rounded class-image") %>
+            <%= render 'class_image' %>
             <%= link_to 'Edit Class', edit_classgroup_path(@classgroup), class: "btn btn-primary class-crud-button"%>
             <%= link_to 'Delete Class', @classgroup, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger class-crud-button"%>
           </div>

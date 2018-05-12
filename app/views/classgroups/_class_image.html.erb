@@ -1,0 +1,13 @@
+<% if @classgroup.image_id == 1 %>
+  <%= image_tag("computer-class-icon.svg", :alt => "A Picture of a Computer", class: "img-rounded class-image") %>
+<% elsif @classgroup.image_id == 2 %>
+  <%= image_tag("web-class-icon.png", :alt => "A Picture of a Computer", class: "img-rounded class-image") %>
+<% elsif @classgroup.image_id == 3 %>
+  <%= image_tag("business-class-icon.png", :alt => "A Picture of a Computer", class: "img-rounded class-image") %>
+<% elsif @classgroup.image_id == 4 %>
+  <%= image_tag("statistics-class-icon.png", :alt => "A Picture of a Computer", class: "img-rounded class-image") %>
+<% elsif @classgroup.image_id == 5 %>
+  <%= image_tag("generic-class-icon.png", :alt => "A Picture of a Computer", class: "img-rounded class-image") %>
+<% elsif @classgroup.image_id == 6 %>
+  <%= image_tag("comical-class-icon.png", :alt => "A Picture of a Computer", class: "img-rounded class-image") %>
+<% end %>
