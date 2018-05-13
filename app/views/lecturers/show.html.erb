@@ -8,47 +8,30 @@
 <div class="row classistant-body">
   <div class="col-md-12">
     <hr>
-    <div class="col-md-6">
-      <h2>Statistics</h2>
-      <hr class="hr-dark">
-
-      <table class="table statistics-table">
-        <thead>
-        <tr>
-          <th scope="col">Statisitc</th>
-          <th scope="col" class="stat-value">Value</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <td>Number of Sessions Attended</td>
-          <td class="stat-value"><%= @lecturer.classsessions.count() %></td>
-        </tr>
-        <tr>
-          <td>Number of Chat Messages Sent</td>
-          <td class="stat-value"><%= @lecturer.chatmessages.count() %></td>
-        </tr>
-        <tr>
-          <td>Number of Questions Asked</td>
-          <td class="stat-value"><%= @lecturer.questionmessages.count() %></td>
-        </tr>
-        <tr>
-          <td>Number of Questions Answered</td>
-          <td class="stat-value"><%= @lecturer.classsessions.count() %></td>
-        </tr>
-        <tr>
-          <td>Number of Times you responded to a poll</td>
-          <td class="stat-value"><%= @lecturer.understanding_responses.count() %></td>
-        </tr>
-
-        </tbody>
-      </table>
-    </div>
-    <div class="col-md-6">
-      <h2>Badges Earned</h2>
-      <hr class="hr-dark">
-      <%= render 'badges' %>
-    </div>
+    <h2>Statistics</h2>
+    <hr class="hr-dark">
+    <table class="table statistics-table">
+      <thead>
+      <tr>
+        <th scope="col">Statisitc</th>
+        <th scope="col" class="stat-value">Value</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>Number of Classes Owned</td>
+        <td class="stat-value"><%= @lecturer.classgroups.count() %></td>
+      </tr>
+      <tr>
+        <td>Number of Chat Messages Sent</td>
+        <td class="stat-value"><%= @lecturer.chatmessages.count() %></td>
+      </tr>
+      <tr>
+        <td>Number of Answers Given</td>
+        <td class="stat-value"><%= @lecturer.answermessages.count() %></td>
+      </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 
