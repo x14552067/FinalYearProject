@@ -2,20 +2,26 @@
   <div class="col-md-12">
     <div class="jumbotron">
       <h1 class="heading">Welcome to Classistant</h1>
+      <hr class="hr-chalk">
+      <h3 class="heading">Classistant is the new Online Learning Application</h3>
+      <p class="heading">Optimise and Enhance your learning experience by introducing Classistant into the Classroom</p>
     </div>
   </div>
 </div>
-<div class="row classistant-body">
+<div class="row ">
   <div class="col-md-12">
-    <h2 class="heading">Welcome to Classistant</h2>
     <div class="col-md-6">
-      <div class="index-access">
-        <h3 class="heading">Register a new Account</h3>
+      <div class="jumbotron">
+        <h3 class="heading">New User?</h3>
+        <p class="heading">Click the Button below to Register a new Account and get started!</p>
+        <%= link_to('Register', new_user_registration_path, class: "btn btn-default btn-block") %>
       </div>
     </div>
     <div class="col-md-6">
-      <div class="index-access">
-        <h3 class="heading">Already a member? Sign in!</h3>
+      <div class="jumbotron">
+        <h3 class="heading">Already a User?</h3>
+        <p class="heading">Click the Button below to Login to your Account and get started!</p>
+        <%= link_to('Login', new_user_session_path, class: "btn btn-default btn-block")  %>
       </div>
     </div>
   </div>

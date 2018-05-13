@@ -274,16 +274,22 @@ class SessionChannel < ApplicationCable::Channel
     #Get the Quiz and its questions
     @quiz = Quiz.find(@quiz_id)
     @quiz_questions = @quiz.quizquestions
+    p "##########################"
+    p "##########################"
+    p @quiz_questions
+    p "##########################"
+    p "##########################"
+
 
     #Associate the Quiz with a Class Session
     @class_session = Classsession.find(@session_id)
     @quiz.classsession << @class_session
 
-    @question_one = @quiz_questions.find(1)
-    @question_two = @quiz_questions.find(2)
-    @question_three = @quiz_questions.find(3)
-    @question_four = @quiz_questions.find(4)
-    @question_five = @quiz_questions.find(5)
+    @question_one = @quiz_questions[0]
+    @question_two = @quiz_questions[1]
+    @question_three = @quiz_questions[2]
+    @question_four = @quiz_questions[3]
+    @question_five = @quiz_questions[4]
 
     @question_payload = {
         'q1' => @question_one.question_text,
@@ -293,6 +299,17 @@ class SessionChannel < ApplicationCable::Channel
         'q5' => @question_five.question_text,
         'qid' => @quiz.id
     }
+
+    p "##########################"
+    p "##########################"
+    p @quiz_questions
+    p "##########################"
+    p "##########################"
+
+
+
+
+
 
     #Send Back the Questions to Display over MQTT
     ActionCable.server.broadcast "session_channel_#{@session_id}", message: @question_payload
@@ -328,11 +345,11 @@ class SessionChannel < ApplicationCable::Channel
     @student = @user.student
 
     #Get the 5 Questions for the Quiz
-    @question_one = @quiz_questions.find(1)
-    @question_two = @quiz_questions.find(2)
-    @question_three = @quiz_questions.find(3)
-    @question_four = @quiz_questions.find(4)
-    @question_five = @quiz_questions.find(5)
+    @question_one = @quiz_questions[0]
+    @question_two = @quiz_questions[1]
+    @question_three = @quiz_questions[2]
+    @question_four = @quiz_questions[3]
+    @question_five = @quiz_questions[4]
 
 
     #Create 5 Quiz Responses, Associate them to the Questions and populate their answer
@@ -413,11 +430,11 @@ class SessionChannel < ApplicationCable::Channel
     @quiz = Quiz.find(@quiz_id)
 
     #Get all the questions for the Quiz
-    @question_one = @quiz_questions.find(1)
-    @question_two = @quiz_questions.find(2)
-    @question_three = @quiz_questions.find(3)
-    @question_four = @quiz_questions.find(4)
-    @question_five = @quiz_questions.find(5)
+    @question_one = @quiz_questions[0]
+    @question_two = @quiz_questions[1]
+    @question_three = @quiz_questions[2]
+    @question_four = @quiz_questions[3]
+    @question_five = @quiz_questions[4]
 
 
     #Count the Correct Answers for each Question

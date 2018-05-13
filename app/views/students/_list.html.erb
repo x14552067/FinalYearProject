@@ -6,6 +6,8 @@
     <th scope="col">Attendance</th>
     <th scope="col">Understanding</th>
     <th scope="col">Quiz Performance</th>
+    <th scope="col">Send Attendance Email</th>
+    <th scope="col">Quiz Performance</th>
   </tr>
   </thead>
   <tbody>
@@ -16,6 +18,10 @@
       <td><%= stud.classsessions.where("classgroup_id = " + @classgroup.id.to_s).count %> / <%= @sessions.count %></td>
 
       <% @yes_count = 0 %>
+
+      <% @quiz_count = 0 %>
+      <% @correct_count = 0 %>
+
       <% stud.understanding_responses.each do |response| %>
         <% @temp = response.understanding_poll %>
         <% @temp_session = @temp.classsession %>
@@ -24,16 +30,36 @@
           <% @yes_count = @yes_count + 1 %>
         <% end %>
       <% end %>
-
-      <% if @poll_count > 15 and @yes_count < 8 and @yes_count > 4 %>
-        <td class="student-warning"> <%= @yes_count %> / <%= @poll_count %>
-      <% elsif @poll_count > 15 and @yes_count < 4 %>
-        <td class="student-critical"> <%= @yes_count %> / <%= @poll_count %>
+      <% if @yes_count < (@poll_count / 2) / 2 %>
+        <td class="student-critical"> <%= @yes_count %> / <%= @poll_count %></td>
+      <% elsif @yes_count < (@poll_count / 2)%>
+        <td class="student-critical"> <%= @yes_count %> / <%= @poll_count %></td>
       <% else %>
-        <td> <%= @yes_count %> / <%= @poll_count %>
+        <td> <%= @yes_count %> / <%= @poll_count %></td>
       <% end %>
-      </td>
+
+      <% stud.quizquestionresponses.each do |quizresp| %>
+        <% @temp = quizresp.quizquestion %>
+        <% @temp_quiz = @temp.quiz %>
+        <% if @temp_quiz.classgroup == @classgroup && quizresp.correct? %>
+          <% @correct_count = @correct_count + 1 %>
+        <% end %>
+      <% end %>
+
+      <% if @correct_count < (@quiz_question_count / 2) / 2 %>
+        <td class="student-critical"><%= @correct_count %> / <%= @quiz_question_count %></td>
+      <% elsif @correct_count < (@quiz_question_count / 2) %>
+        <td class="student-warning"><%= @correct_count %> / <%= @quiz_question_count %></td>
+      <% else %>
+        <td><%= @correct_count %> / <%= @quiz_question_count %></td>
+      <% end %>
+
+      <td><%=  %></td>
+      <td><%=  %></td>
+
+
     </tr>
   <% end %>
+  <!--End of Students Do-->
   </tbody>
 </table>

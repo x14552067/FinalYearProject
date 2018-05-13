@@ -1,27 +1,27 @@
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-12 col-sm-12">
     <div class="jumbotron">
       <h2 class="heading">Dashboard</h2>
     </div>
   </div>
 </div>
 <div class="row dashboard-row">
-  <div class="col-md-3 dashboard-option">
+  <div class="col-md-3 col-sm-3 dashboard-option">
     <%= image_tag("class-list-icon.png", :alt => "An image of a clipboard representing your list of classes", class: "img-circle dashboard-image") %>
     <br>
     <%= link_to("Classes", classgroups_url, class: "btn btn-primary dashboard-btn dashboard-class-list-btn") %>
   </div>
-  <div class="col-md-3 dashboard-option">
+  <div class="col-md-3 col-sm-3  dashboard-option">
     <%= image_tag("class-session-icon.png", :alt => "A Placeholder Image", class: "img-circle dashboard-image") %>
     <br>
     <%= link_to("Create a Class", new_classgroup_url, class: "btn btn-primary dashboard-btn dashboard-session-btn") %>
   </div>
-  <div class="col-md-3 dashboard-option">
+  <div class="col-md-3 col-sm-3  dashboard-option">
     <%= image_tag("profile-icon.png", :alt => "An Image Representing a Profile", class: "img-circle dashboard-image") %>
     <br>
     <%= link_to("Profile", lecturer_url(@lecturer), class: "btn btn-primary dashboard-btn dashboard-profile-btn") %>
   </div>
-  <div class="col-md-3 dashboard-option">
+  <div class="col-md-3 col-sm-3  dashboard-option">
     <%= image_tag("settings.png", :alt => "An image of tools representing settings", class: "img-circle dashboard-image") %>
     <br>
     <%= link_to("Settings", edit_user_registration_path, class: "btn btn-primary dashboard-btn dashboard-settings-btn") %>
@@ -29,12 +29,12 @@
 </div>
 <% if current_user.is_admin %>
   <div class="row dashboard-row">
-    <div class="col-md-3 dashboard-option">
+    <div class="col-md-3  col-sm-3 dashboard-option">
       <%= image_tag("admin.png", :alt => "A Placeholder Image", class: "img-circle dashboard-image") %>
       <br>
       <%= link_to("Add Lecturer", new_lecturer_url, class: "btn btn-primary dashboard-btn dashboard-admin-btn") %>
     </div>
-    <div class="col-md-3 dashboard-option">
+    <div class="col-md-3 col-sm-3  dashboard-option">
       <%= image_tag("admin.png", :alt => "A Placeholder Image", class: "img-circle dashboard-image") %>
       <br>
       <%= link_to("Set Admin", new_joinsession_url, class: "btn btn-primary dashboard-btn dashboard-admin-btn") %>

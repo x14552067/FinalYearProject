@@ -29,15 +29,22 @@ class ClassgroupsController < ApplicationController
       @sessions = @classgroup.classsessions
       @quizzes = @classgroup.quizzes
       @poll_count = 0
+      @quiz_count = 0;
+
       @classgroup.classsessions.each do |ses|
         @poll_count = @poll_count + ses.understanding_polls.count
+        @quiz_count = @quiz_count + ses.quizzes.count
       end
+
+      @quiz_question_count = (@quiz_count*5)
+
+
+
 
       render 'lecturer_show'
 
       #@student = @students.find(1)
       #@student = @student.user
-
       # ClassistantMailer.with(student: @student).support_email.deliver_now
 
     end
