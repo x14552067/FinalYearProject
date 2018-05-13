@@ -22,4 +22,13 @@ class ClassistantMailer < ApplicationMailer
          subject: 'Classistant | Notice from Lecturer: ')
   end
 
+  def help_email
+    @student = params[:student]
+    @session = params[:classsession]
+    @user = @student.user
+
+    mail(to: @user.email,
+         subject: 'Classistant | Addiontal Resources to look over after the last Session: ')
+  end
+
 end

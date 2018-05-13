@@ -26,7 +26,7 @@
         <% @temp = response.understanding_poll %>
         <% @temp_session = @temp.classsession %>
         <% @temp_classgroup = @temp_session.classgroup %>
-        <% if @understood and @temp_classgroup == @classgroup %>
+        <% if response.understood and @temp_classgroup == @classgroup %>
           <% @yes_count = @yes_count + 1 %>
         <% end %>
       <% end %>

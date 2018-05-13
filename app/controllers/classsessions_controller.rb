@@ -1,4 +1,5 @@
 require 'json'
+require 'date'
 class ClasssessionsController < ApplicationController
   #SUPER AWESOME snippet of code suggestion from stack overflow to change the layout for a controller based on the action!
   #https://stackoverflow.com/questions/3025784/rails-layouts-per-action
@@ -24,7 +25,7 @@ class ClasssessionsController < ApplicationController
 
     #Combine the Questions and Answers into one collection and sort it by the created at date.
     # This should hopefully retain correct order. The variable name is meant to read Q & A
-    @qanda = ( @questions + @answers ).sort_by(&:created_at)
+    @qanda = (@questions + @answers).sort_by(&:created_at)
 
     #Get the current user logged in (Used for logic in the session)
     @user = current_user
@@ -79,6 +80,7 @@ class ClasssessionsController < ApplicationController
     @session.start_time = DateTime.now
     @session.end_time = classsession_params[:end_time]
     @session.is_active = true
+    @session.extra_help = classsession_params[:extra_help]
     @classgroup_id = classsession_params[:classgroup_id]
     @classgroup = Classgroup.find(@classgroup_id)
     @session.classgroup = @classgroup
@@ -118,12 +120,12 @@ class ClasssessionsController < ApplicationController
     #Get all the messages for the session
     @messages = @session.chatmessages
     #Get all the questions for the session
-    @questions= @session.questionmessages
+    @questions = @session.questionmessages
     #Get all the answers for the session
-    @answers= @session.answermessages
+    @answers = @session.answermessages
 
     #Get Questions and Answers for the Session (This composes the Q&A History box)
-    @qanda = ( @questions + @answers ).sort_by(&:created_at)
+    @qanda = (@questions + @answers).sort_by(&:created_at)
 
     render 'review'
 
@@ -132,7 +134,55 @@ class ClasssessionsController < ApplicationController
   def end_session
     @session = Classsession.find(params[:classsession_id])
     @session.is_active = false
-    @session.end_time = Datetime.now
+    @session.end_time = DateTime.now
+
+    @poll_count = @session.understanding_polls.count()
+
+
+    #Check if the Lecturer Provided extra help materials
+    if not @session.extra_help.nil?
+
+      #If so, get all the students from the session
+      @students = @session.students
+
+      #Iterate over them
+      @students.each do |stud|
+
+        #Keep track of how much they understood
+        @yes_count = 0
+
+
+        #Get all their responses
+        @understanding_responses = stud.understanding_responses
+
+        #Iterate over the responses
+        @understanding_responses.each do |resp|
+
+          #Get the poll
+          @temp_poll = resp.understanding_poll
+
+          #Get the session associated with the poll
+          @temp_session = @temp_poll.classsession
+
+          #If the poll was assocaited with the ending session
+          if @temp_session == @session
+
+            #Check did they understand?
+            if resp.understood
+              #They did, so increment their yes counter
+              @yes_count = @yes_count + 1
+            end
+          end
+        end
+
+        #Finally, check was their understanding under 50%
+        if @yes_count < (@poll_count / 2)
+          #Mail them the extra resources
+          ClassistantMailer.with(student: stud, classsession: @session).help_email.deliver_now
+        end
+      end
+    end
+
     @session.save
 
     redirect_to '/classsessions/' + @session.id.to_s + '/review'
@@ -141,6 +191,6 @@ class ClasssessionsController < ApplicationController
 
   private
   def classsession_params
-    params.require(:classsession).permit(:topic, :end_time, :classgroup_id)
+    params.require(:classsession).permit(:topic, :end_time, :classgroup_id, :extra_help)
   end
 end

@@ -22,9 +22,9 @@
         <h2>Topic: <%= @session.topic %></h2>
         <div class="col-md-6">
           <p><strong>Session Key:</strong> <%= @session.session_key%></p>
+          <p><strong>Additional Help:</strong> <%= @session.extra_help%></p>
           <p><strong>Attendance:</strong> <%= @session.students.count %></p>
           <p><strong>Questions Asked:</strong> <%= @questions.count %></p>
-          <p><strong>Questions Answered:</strong> FIGURE THIS OUT</p>
         </div>
         <div class="col-md-6">
           <p><strong>Messages Sent:</strong> <%= @messages.count %></p>

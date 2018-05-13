@@ -112,6 +112,14 @@ class ClassgroupsController < ApplicationController
     end
   end
 
+  def destroy
+
+    @classgroup = Classgroup.find(params[:id])
+    @classgroup.destroy
+    redirect_to classgroups_path
+
+  end
+
   private
   def classgroup_params
     params.require(:classgroup).permit(:class_name, :course_name, :class_description, :classgroup, :image_id)

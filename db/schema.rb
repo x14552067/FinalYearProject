@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(version: 20180511144051) do
     t.datetime "start_time"
     t.datetime "end_time"
     t.string "topic"
+    t.string "extra_help"
     t.integer "session_key"
     t.boolean "is_active"
     t.datetime "created_at", null: false

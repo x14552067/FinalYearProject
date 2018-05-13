@@ -14,6 +14,9 @@
       <%= form.text_field :topic, label: "Topic of the Session"%>
     </div>
     <div class="field">
+      <%= form.text_area :extra_help, label: "Additional resources to send to students who struggle during the Session (Text, YouTube link, etc)"%>
+    </div>
+    <div class="field">
       <%= form.hidden_field('classgroup_id', :value => @classgroup) %>
     </div>
   </div>
