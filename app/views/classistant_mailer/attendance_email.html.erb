@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+</head>
+<body>
+<h1>This is an Urgent Notice from Classistant</h1>
+<p>
+  Dear <%= @student.full_name %>,
+</p>
+
+<p>
+  It appears that you are not attending many sessions for <%= @classgroup.class_name %>
+</p>
+<p>
+  Would it be possible for you to come meet me and we can discuss your performance in person. I want to ensure you are able to keep on top of things and don't fall behind
+</p>
+<p>
+  Kind Regards,
+</p>
+<p>
+  <%= @lecturer.full_name %>
+</p>
+</body>
+</html>

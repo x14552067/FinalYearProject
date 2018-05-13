@@ -35,24 +35,22 @@ class StudentsController < ApplicationController
   def send_support
 
     @student = Student.find(params[:student_id])
-
     @classgroup = Classgroup.find(params[:classgroup])
 
-
-    p @student
-    p @classgroup
-
-
     ClassistantMailer.with(student: @student, classgroup: @classgroup).support_email.deliver_now
-
-
-
-
-
 
     redirect_to('/classgroups/' + @classgroup.id.to_s)
 
 
+  end
+
+  def send_attendance
+    @student = Student.find(params[:student_id])
+    @classgroup = Classgroup.find(params[:classgroup])
+
+    ClassistantMailer.with(student: @student, classgroup: @classgroup).attendance_email.deliver_now
+
+    redirect_to('/classgroups/' + @classgroup.id.to_s)
   end
 
   def student_params

@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     end
     resources :students do
       get :send_support
+      get :send_attendance
     end
     resources :dashboard
     resources :classgroups

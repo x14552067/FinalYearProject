@@ -54,7 +54,7 @@
         <td><%= @correct_count %> / <%= @quiz_question_count %></td>
       <% end %>
 
-      <td><%= link_to("Send Performance Email", student_send_support_url(stud.id, :classgroup => @classgroup.id), class: "btn btn-danger") %></td>
+      <td><%= link_to("Send Attendance Email", student_send_attendance_url(stud.id, :classgroup => @classgroup.id), class: "btn btn-danger") %></td>
       <td><%= link_to("Send Performance Email", student_send_support_url(stud.id, :classgroup => @classgroup.id), class: "btn btn-danger") %></td>
 
 
