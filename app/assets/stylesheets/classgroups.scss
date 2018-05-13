@@ -81,8 +81,12 @@
 
 .student-warning {
   background-color: #E67E22;
+
 }
 
 .student-critical {
   background-color: #F03434;
+  opacity: .9;
+  font-weight: bold;
+  text-decoration: underline;
 }

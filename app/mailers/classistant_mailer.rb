@@ -20,8 +20,6 @@ class ClassistantMailer < ApplicationMailer
 
     mail(to: @user.email,
          subject: 'Classistant | Notice from Lecturer: ')
-
-
   end
 
 end

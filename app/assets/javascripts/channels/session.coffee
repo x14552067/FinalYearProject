@@ -240,8 +240,6 @@ join_session = ->
   # Called when there's incoming data on the websocket for this channel
       payload = data['message']
 
-      console.log(payload)
-
       if payload['type'] == 'chat'
 
         if(payload['utp'] == "191")
@@ -396,12 +394,7 @@ join_session = ->
         quiz_id: quiz_id
         sid: $('#sid').text()
 
-      console.log("Quizzing Class...")
-      console.log(payload)
-
       @perform 'activate_quiz', message: payload, room_id: s_id
-      console.log(payload)
-
 
     quiz_response: () ->
       payload =
@@ -413,8 +406,6 @@ join_session = ->
         qid: $('#qid').text()
         uid: $('#uid').text()
         sid: s_id
-
-      console.log(payload)
 
       @perform 'quiz_response', message: payload, room_id: s_id
 
@@ -454,9 +445,6 @@ join_session = ->
         mid: message_id
         content: content
 
-      console.log("Specific payload")
-      console.log(payload)
-
       $('.answer-label').text("")
       $('.question-form').find('.mid').text("")
 
@@ -481,7 +469,6 @@ join_session = ->
     $(document).on 'keypress', '[data-behavior~=answer_send]', (event) ->
       if event.keyCode is 13 # return/enter = send
         question_id = $('.question-form').find(".mid").text()
-        console.log(question_id)
 
         if question_id == ''
           App.session.general_answer_question()
