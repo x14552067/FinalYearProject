@@ -8,7 +8,9 @@ Rails.application.routes.draw do
       get :set_admin
 
     end
-    resources :students
+    resources :students do
+      get :send_support
+    end
     resources :dashboard
     resources :classgroups
     resources :classsessions do

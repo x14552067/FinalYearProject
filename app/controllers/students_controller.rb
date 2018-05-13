@@ -32,8 +32,31 @@ class StudentsController < ApplicationController
     end
   end
 
+  def send_support
+
+    @student = Student.find(params[:student_id])
+
+    @classgroup = Classgroup.find(params[:classgroup])
+
+
+    p @student
+    p @classgroup
+
+
+    ClassistantMailer.with(student: @student, classgroup: @classgroup).support_email.deliver_now
+
+
+
+
+
+
+    redirect_to('/classgroups/' + @classgroup.id.to_s)
+
+
+  end
+
   def student_params
-    params.require(:student).permit(:first_name, :last_name)
+    params.require(:student).permit(:first_name, :last_name, :classgroup)
   end
 
 end

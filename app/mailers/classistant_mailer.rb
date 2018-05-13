@@ -3,7 +3,25 @@ class ClassistantMailer < ApplicationMailer
 
   def support_email
     @student = params[:student]
-    mail(to: @student.email,
+    @classgroup = params[:classgroup]
+    @lecturer = @classgroup.lecturer
+
+    @user = @student.user
+
+    mail(to: @user.email,
          subject: 'Classistant | Notice from Lecturer: ')
   end
+
+  def attendance_email
+    @student = params[:student]
+    @classgroup = params[:classgroup]
+    @lecturer = @classgroup.lecturer
+    @user = @student.user
+
+    mail(to: @user.email,
+         subject: 'Classistant | Notice from Lecturer: ')
+
+
+  end
+
 end

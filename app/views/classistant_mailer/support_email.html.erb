@@ -6,18 +6,21 @@
 <body>
 <h1>This is an Urgent Notice from Classistant</h1>
 <p>
-  Dear <%= @student_name %>
+  Dear <%= @student.full_name %>,
 </p>
 
 <p>
-  It appears that you are not performing so well in <%= @class_name %>
+  It appears that you are not performing so well in <%= @classgroup.class_name %>
 </p>
 <p>
+  Would it be possible for you to come meet me and we can discuss your performance in person. I want to ensure you are able to keep on top of things and don't fall behind
+</p>
+<p>
+  Kind Regards,
+</p>
+<p>
+  <%= @lecturer.full_name %>
+</p>
 
-</p>
-<p>
-  To login to the site, just follow this link:.
-</p>
-<p>Thanks for joining and have a great day!</p>
 </body>
 </html>

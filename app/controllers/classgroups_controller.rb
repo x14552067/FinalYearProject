@@ -36,17 +36,10 @@ class ClassgroupsController < ApplicationController
         @quiz_count = @quiz_count + ses.quizzes.count
       end
 
+      #Multiply by 5 because each quiz has 5 questions!
       @quiz_question_count = (@quiz_count*5)
 
-
-
-
       render 'lecturer_show'
-
-      #@student = @students.find(1)
-      #@student = @student.user
-      # ClassistantMailer.with(student: @student).support_email.deliver_now
-
     end
 
 
