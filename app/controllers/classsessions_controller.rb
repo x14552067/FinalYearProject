@@ -127,7 +127,6 @@ class ClasssessionsController < ApplicationController
 
     render 'review'
 
-
   end
 
   def end_session

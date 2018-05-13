@@ -12,7 +12,7 @@
       <%= bootstrap_form_for @lecturer do |form| %>
         <% if @lecturer.errors.any? %>
           <div class="error_explanation">
-            <h2><%= pluralize(student.errors.count, "error") %> prohibited this student from being saved:</h2>
+            <h2><%= pluralize(@lecturer.errors.count, "error") %> prohibited this Lecturer from being saved:</h2>
             <ul>
               <% @lecturer.errors.full_messages.each do |message| %>
                 <li><%= message %></li>
@@ -32,7 +32,7 @@
         </div>
 
         <div class="actions">
-          <%= form.submit "Complete Registration", class: "btn btn-primary" %>
+          <%= form.submit "Add Lecturer", class: "btn btn-primary" %>
         </div>
 
         </div>

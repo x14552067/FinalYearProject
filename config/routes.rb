@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
 
   authenticate :user do
-    resource :lecturer do
+    resources :lecturers do
       get :set_admin
 
     end

@@ -29,7 +29,7 @@ gem "bootstrap_form",
     git: "https://github.com/bootstrap-ruby/bootstrap_form.git",
     branch: "master"
 
-# Charting Library for Realtime Charts
+# Charting Library for Real-time Charts
 gem 'chartkick'
 
 # Use Uglifier as compressor for JavaScript assets
@@ -57,6 +57,7 @@ group :development, :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
+  gem 'rails-erd'
 end
 
 group :development do
